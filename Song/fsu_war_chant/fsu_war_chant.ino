@@ -8,7 +8,7 @@ int melody[] = {
 
 // note durations: 4 = quarter note, 8 = eighth note, etc.:
 int noteDurations[] = {
-  2, 4, 8, 8, 2, 8, 8, 8, 2, 4, 8, 8, 4, 8, 2
+  1, 2, 4, 4, 1, 4, 4, 4, 1, 2, 4, 4, 2, 4, 1
 };
 void setup() {
   // iterate over the notes of the melody:
