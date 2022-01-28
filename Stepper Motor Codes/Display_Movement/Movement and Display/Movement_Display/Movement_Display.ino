@@ -24,27 +24,11 @@ Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
 #if defined(USE_SD_CARD)
   SdFat                SD;         // SD card filesystem
   Adafruit_ImageReader reader(SD); // Image-reader object, pass in SD filesys
-#else
-  // SPI or QSPI flash filesystem (i.e. CIRCUITPY drive)
-  #if defined(__SAMD51__) || defined(NRF52840_XXAA)
-    Adafruit_FlashTransport_QSPI flashTransport(PIN_QSPI_SCK, PIN_QSPI_CS,
-      PIN_QSPI_IO0, PIN_QSPI_IO1, PIN_QSPI_IO2, PIN_QSPI_IO3);
-  #else
-    #if (SPI_INTERFACES_COUNT == 1)
-      Adafruit_FlashTransport_SPI flashTransport(SS, &SPI);
-    #else
-      Adafruit_FlashTransport_SPI flashTransport(SS1, &SPI1);
-    #endif
-  #endif
-  Adafruit_SPIFlash    flash(&flashTransport);
-  FatFileSystem        filesys;
-  Adafruit_ImageReader reader(filesys); // Image-reader, pass in flash filesys
+//I TOOK OUT UNNECESSARY CODE HERE. -MEL
 #endif
 
 Adafruit_ILI9341     tft    = Adafruit_ILI9341(TFT_CS, TFT_DC);
 Adafruit_Image       img;        // An image loaded into RAM
-int32_t              width  = 0, // BMP image dimensions
-                     height = 0;
 
 void setup(void) {
   Serial.begin(9600);
@@ -61,19 +45,9 @@ void setup(void) {
     Serial.println(F("SD begin() failed"));
     for(;;); // Fatal error, do not continue
   }
-#else
-  // SPI or QSPI flash requires two steps, one to access the bare flash
-  // memory itself, then the second to access the filesystem within...
-  if(!flash.begin()) {
-    Serial.println(F("flash begin() failed"));
-    for(;;);
-  }
-  if(!filesys.begin(&flash)) {
-    Serial.println(F("filesys begin() failed"));
-    for(;;);
-  }
+//I TOOK OUT UNNECESSARY CODE HERE. -MEL
 #endif
-  Serial.println(F("OK!"));
+//  Serial.println(F("OK!"));
 
   // Fill screen blue. Not a required step, this just shows that we're
   // successfully communicating with the screen.
