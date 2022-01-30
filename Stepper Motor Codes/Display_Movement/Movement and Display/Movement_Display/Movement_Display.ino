@@ -24,7 +24,7 @@ Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
 #if defined(USE_SD_CARD)
   SdFat                SD;         // SD card filesystem
   Adafruit_ImageReader reader(SD); // Image-reader object, pass in SD filesys
-//I TOOK OUT UNNECESSARY CODE HERE. -MEL
+
 #endif
 
 Adafruit_ILI9341     tft    = Adafruit_ILI9341(TFT_CS, TFT_DC);
@@ -45,9 +45,8 @@ void setup(void) {
     Serial.println(F("SD begin() failed"));
     for(;;); // Fatal error, do not continue
   }
-//I TOOK OUT UNNECESSARY CODE HERE. -MEL
+
 #endif
-//  Serial.println(F("OK!"));
 
   // Fill screen blue. Not a required step, this just shows that we're
   // successfully communicating with the screen.
