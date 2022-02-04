@@ -13,12 +13,12 @@ void sense(void)
 {
   if(digitalRead(22) == 0)
   {
-    command = 15;
+    command = 15*(1.2);
     command2 = 15;
   }
     else if (digitalRead(22) == 1)
     {
-      command = 100;
-      command2 = -100;
+      command = 0;
+      command2 = 0;
     }
 }

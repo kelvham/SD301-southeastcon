@@ -64,7 +64,25 @@ void setup(void) {
   Serial.println("counterclockwise");
   myStepper.step(stepsPerRevolution/4);
 
+    digitalWrite (8,LOW);
+    digitalWrite (9,LOW);
+    digitalWrite (10,LOW);
+    digitalWrite (11,LOW);
+
   delay(2000); // Pause 2 seconds before moving on to loop()
+       // step one revolution in the other direction:
+
+    digitalWrite (8,HIGH);
+    digitalWrite (9,HIGH);
+    digitalWrite (10,HIGH);
+    digitalWrite (11,HIGH);
+ Serial.println("clockwise");
+ myStepper.step(-stepsPerRevolution/4);
+
+    digitalWrite (8,LOW);
+    digitalWrite (9,LOW);
+    digitalWrite (10,LOW);
+    digitalWrite (11,LOW);
 }
 
 void loop() {
@@ -72,11 +90,6 @@ void loop() {
  reader.drawBMP("/logos.bmp", tft, 0, 0);
 
  delay(6000);
-     // step one revolution in the other direction:
- Serial.println("clockwise");
- myStepper.step(-stepsPerRevolution/4);
-
- delay(2000);
  tft.fillScreen(ILI9341_BLACK);
  
  exit(1);
