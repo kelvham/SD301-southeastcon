@@ -1,31 +1,44 @@
 void track(void); //Speed control
 void track_setup(void); //pin set up
 
-float command = 0;
+float command1 = 0;
+float command2 = 0;
 
 void track_setup(void)
 {
-pinMode(25, INPUT);
-pinMode(26, INPUT);
-pinMode(27, INPUT);
-pinMode(28, INPUT);
-pinMode(29, INPUT);
+pinMode(A1, INPUT);
+pinMode(A2, INPUT);
+pinMode(A3, INPUT);
+pinMode(A4, INPUT);
+pinMode(A5, INPUT);
 }
 
 void track(void)
 {
-  if((digitalRead(26) == 1) && (digitalRead(27) == 1) && (digitalRead(28) == 1))
+  //Serial.print(A1);
+  //Serial.print(A2);
+  //Serial.print(A3);
+  //Serial.print(A4);
+  Serial.println(analogRead(A3));
+  
+  if((analogRead(A2) > 100) && (analogRead(A3) > 100) && (analogRead(A4) > 100))
   {
-    command1 = 3.5;
-    command2 = 3.5;
+    command1 = 7;
+    command2 = 7;
   }
-    else if((digitalRead(25) == 1) && (digitalRead(26) == 1) && (digitalRead(27) == 1))
+    else if((analogRead(A1) > 100) && (analogRead(A2) > 100) && (analogRead(A3) > 100))
     {
-      command1 = 3.5;
-      command2 = 3.0;
+      command1 = 0;
+      command2 = 7;
     }
-      else if (digitalRead(22) == 1)
+      else if((analogRead(A3) > 100) && (analogRead(A4) > 100) && (analogRead(A5) > 100))
       {
-        command = 0;
+        command1 = 7;
+        command2 = 0;
       }
+        else
+        {
+          command1 = 0;
+          command2 = 0;
+        }
 }
