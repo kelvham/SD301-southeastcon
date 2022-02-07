@@ -30,33 +30,17 @@ void track(void)
   }
     else if((analogRead(A1)< x) || (analogRead(A2) < x))//left
     {
-      if((analogRead(A1)< x))
-      {
-        command1 = 7;//lefmotr
-        command2 = 9;//righmotr
-      }
-      else
-      {
-        command1 = 6;
-        command2 = 8;
-      }
+      command1 = 7;//lefmotr
+      command2 = 9;//righmotr
       prevCom = 1;
     }
       else if((analogRead(A4) < x) || (analogRead(A5) < x))//right
       {
-        if((analogRead(A5)< x))
-        {
-        command1 = 9;
-        command2 = 7;
-        }
-        else
-        {
-          command1 = 8;
-          command2 = 6;
-        }
+        command1 = 9;//lefmotr
+        command2 = 7;//righmotr
         prevCom = 5;
       }
-        else
+        else 
         {
           if(prevCom == 5)
           {
