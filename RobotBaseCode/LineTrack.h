@@ -47,14 +47,14 @@ void track(void)
       }*/
         else if((analogRead(A1)< x) || (analogRead(A2) < x))//left
         {
-          command1 = -9;//lefmotr
-          command2 = 8.5;//righmotr
+          command1 = -6.5;//lefmotr
+          command2 = 6;//righmotr
           //prevCom = 1;
         }
           else if((analogRead(A4) < x) || (analogRead(A5) < x))//right
           {
-            command1 = 8.5;//lefmotr
-            command2 = -9;//righmotr
+            command1 = 6;//lefmotr
+            command2 = -6.5;//righmotr
             //prevCom = 5;
           }
             else
