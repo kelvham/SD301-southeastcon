@@ -5,7 +5,7 @@
 void setup()
 {
   //set_up_timer();
-  //sense_setup();
+  sense_setup();
   track_setup();
   motor_init();
   encoder_init();
@@ -17,7 +17,7 @@ void loop(void)
   //motor_speed(0, 155);
   //motor_speed(1, 155);
 
-  //sense();
+  sense();
   track();
   get_current_status();
   
