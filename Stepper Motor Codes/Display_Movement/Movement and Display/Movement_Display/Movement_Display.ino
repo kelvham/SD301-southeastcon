@@ -24,7 +24,7 @@ Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
 #if defined(USE_SD_CARD)
   SdFat                SD;         // SD card filesystem
   Adafruit_ImageReader reader(SD); // Image-reader object, pass in SD filesys
-//I TOOK OUT UNNECESSARY CODE HERE. -MEL
+
 #endif
 
 Adafruit_ILI9341     tft    = Adafruit_ILI9341(TFT_CS, TFT_DC);
@@ -45,9 +45,8 @@ void setup(void) {
     Serial.println(F("SD begin() failed"));
     for(;;); // Fatal error, do not continue
   }
-//I TOOK OUT UNNECESSARY CODE HERE. -MEL
+
 #endif
-//  Serial.println(F("OK!"));
 
   // Fill screen blue. Not a required step, this just shows that we're
   // successfully communicating with the screen.
@@ -65,7 +64,25 @@ void setup(void) {
   Serial.println("counterclockwise");
   myStepper.step(stepsPerRevolution/4);
 
+    digitalWrite (8,LOW);
+    digitalWrite (9,LOW);
+    digitalWrite (10,LOW);
+    digitalWrite (11,LOW);
+
   delay(2000); // Pause 2 seconds before moving on to loop()
+       // step one revolution in the other direction:
+
+    digitalWrite (8,HIGH);
+    digitalWrite (9,HIGH);
+    digitalWrite (10,HIGH);
+    digitalWrite (11,HIGH);
+ Serial.println("clockwise");
+ myStepper.step(-stepsPerRevolution/4);
+
+    digitalWrite (8,LOW);
+    digitalWrite (9,LOW);
+    digitalWrite (10,LOW);
+    digitalWrite (11,LOW);
 }
 
 void loop() {
@@ -73,11 +90,6 @@ void loop() {
  reader.drawBMP("/logos.bmp", tft, 0, 0);
 
  delay(6000);
-     // step one revolution in the other direction:
- Serial.println("clockwise");
- myStepper.step(-stepsPerRevolution/4);
-
- delay(2000);
  tft.fillScreen(ILI9341_BLACK);
  
  exit(1);
