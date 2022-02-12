@@ -6,11 +6,11 @@ void sense_setup(void)
 pinMode(22, INPUT);
 }
 
-int obs=0;
+int obs=0;//flag for obstacle detection
 
 void sense(void)
 {
-  if(digitalRead(22) == 1)
+  if(digitalRead(22) == 1)//if obstacle detected
   {
    obs = 1;
   }
