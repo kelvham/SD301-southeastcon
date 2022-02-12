@@ -170,17 +170,17 @@ void set_up_timer(void)
 void get_current_status(void)
 {
   //motor 0
-  cur_vel[0] = (cur_pos[0] - prev_pos[0]) / T;
-  cur_pos[0] = (encoder0_val*2*PI) / (4*END_CPR*Gear_Ratio); //(Encoderval*NumOfWheels*PI)/(QuadratureDecoding*CountPerRev*GearRatio)
+  cur_pos[0] = ((encoder0_val*2*PI) / (4*END_CPR*Gear_Ratio))*1.57; //(Encoderval*NumOfWheels*PI)/(QuadratureDecoding*CountPerRev*GearRatio)
   prev_vel[0] = cur_vel[0];
+  cur_vel[0] = (cur_pos[0] - prev_pos[0]) / T;
   prev_pos[0] = cur_pos[0];
   des_pos[0] = cur_pos[0] + cur_vel[0]*T;
-  //Serial.println(cur_pos[0]);
+  Serial.println(cur_vel[0]);
     
   //motor 1
-  cur_vel[1] = (cur_pos[1] - prev_pos[1]) / T;
-  cur_pos[1] = (encoder1_val*2*PI) / (4*END_CPR*Gear_Ratio); //(Encoderval*NumOfWheels*PI)/(QuadratureDecoding*CountPerRev*GearRatio)
+  cur_pos[1] = ((encoder1_val*2*PI) / (4*END_CPR*Gear_Ratio))*1.57; //(Encoderval*NumOfWheels*PI)/(QuadratureDecoding*CountPerRev*GearRatio)
   prev_vel[1] = cur_vel[1];
+  cur_vel[1] = (cur_pos[1] - prev_pos[1]) / T;
   prev_pos[1] = cur_pos[1];
   des_pos[1] = cur_pos[1] + cur_vel[1]*T;
 }
@@ -188,9 +188,9 @@ void get_current_status(void)
 void low_level_control(void)
 {
   static float batt_volt = 7.2;
-  float Kp = 5;
+  float Kp = .5; //5;
   float Ki = 0;
-  float Kd = 0.5;
+  float Kd = 5; //0.5;
   float volt[2] = {0,0};
   int duty = 0;
   
