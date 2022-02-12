@@ -16,7 +16,6 @@ void pwm_init(void)
 void motor_init(void)
 {
   pwm_init();
-  
   pinMode(50, OUTPUT); //Direction(I1) for motor 0/left motor
   pinMode(51, OUTPUT); //Direction(I2) for motor 0
   pinMode(52, OUTPUT); //Direction(I3) for motor 1/right motor
@@ -176,6 +175,7 @@ void get_current_status(void)
   prev_vel[0] = cur_vel[0];
   prev_pos[0] = cur_pos[0];
   des_pos[0] = cur_pos[0] + cur_vel[0]*T;
+  //Serial.println(cur_pos[0]);
     
   //motor 1
   cur_vel[1] = (cur_pos[1] - prev_pos[1]) / T;
@@ -189,13 +189,14 @@ void low_level_control(void)
 {
   static float batt_volt = 7.2;
   float Kp = 5;
+  float Ki = 0;
   float Kd = 0.5;
   float volt[2] = {0,0};
   int duty = 0;
-
-  volt[0] = Kp*(des_pos[0]-cur_pos[0]) + Kd*(des_vel[0]-cur_vel[0]);
-  volt[1] = Kp*(des_pos[1]-cur_pos[1]) + Kd*(des_vel[1]-cur_vel[1]);
-
+  
+  volt[0] = Kp*(des_pos[0]-cur_pos[0]) + Ki*((des_pos[0] - cur_pos[0])*T) + Kd*(des_vel[0]-cur_vel[0]);
+  volt[1] = Kp*(des_pos[1]-cur_pos[1]) + Ki*((des_pos[1] - cur_pos[1])*T) + Kd*(des_vel[1]-cur_vel[1]);
+  
   duty = (volt[0]/batt_volt)*255;
   motor_speed(0, duty);
   
