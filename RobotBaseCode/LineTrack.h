@@ -21,7 +21,6 @@ void track(void)
   //Serial.println(analogRead(A4));
   Serial.println(analogRead(A3));
   int x = 0;
-  //int prevCom = 0;
 
   if(analogRead(A3) > x)
   {
