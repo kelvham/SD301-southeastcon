@@ -24,8 +24,8 @@ void track(void)
 
   if(analogRead(A3) > x)
   {
-    command1 = 1;//lefmotr speed
-    command2 = 1;//righmotr speed
+    command1 = 5;//lefmotr speed
+    command2 = 5;//righmotr speed
   }
     else if((analogRead(A1)< x) || (analogRead(A2) < x))//left
     {
