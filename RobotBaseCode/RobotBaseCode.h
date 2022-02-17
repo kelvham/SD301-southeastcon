@@ -141,7 +141,7 @@ void Enc1()
 //PD control stuff----------------------------------------------------------------------------------------
 #define END_CPR     100
 #define Gear_Ratio  50
-#define T           0.01  // 10 msec
+#define T           0.1  // 100 msec
 
 float des_vel[2] = {0,0};
 float cur_vel[2] = {0,0};
@@ -160,7 +160,7 @@ void set_up_timer(void)
   TCCR1A = 0;
   TCCR1B = 0;
   TCNT1 = 0;
-  OCR1A = 625; //Used to compare the match registry
+  OCR1A = 6250; //Used to compare the match registry
   TCCR1B |= (1 << WGM12); //CTC mode
   TCCR1B |= (1 << CS12); //256 prescaler
   TIMSK1 |= (1 << OCIE1A); //Enable timer compare interrupt
@@ -175,7 +175,7 @@ void get_current_status(void)
   prev_pos[0] = cur_pos[0];
   des_pos[0] = prev_des_pos[0] + des_vel[0]*T;
   prev_des_pos[0] = des_pos[0];
-  Serial.println(cur_vel[0]);
+  //Serial.println(cur_vel[0]);
     
   //motor 1
   cur_pos[1] = ((encoder1_val*2*PI) / (4*END_CPR*Gear_Ratio))*1.57; //(Encoderval*NumOfWheels*PI)/(QuadratureDecoding*CountPerRev*GearRatio)

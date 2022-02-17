@@ -24,29 +24,29 @@ void track(void)
   Serial.print(analogRead(A4));
   Serial.print(" ");
   Serial.println(analogRead(A5));
-  int x = 600;
+  int x = 550;
 
-  if(analogRead(A1) > x && analogRead(A2) > x && analogRead(A3) > x && analogRead(A4) > x && analogRead(A5) > x)
+  /*if(analogRead(A1) > x && analogRead(A2) > x && analogRead(A3) > x && analogRead(A4) > x && analogRead(A5) > x)
   {
       command1 = 0;//lefmotr speed
       command2 = 0;//righmotr speed
-  }  
+  }  */
 
   if(analogRead(A3) < x)
   {
-      command1 = 1;//lefmotr speed
-      command2 = 1;//righmotr speed
+      command1 = 3;//lefmotr speed
+      command2 = 3;//righmotr speed
   }
-    else if((analogRead(A1)< x) || (analogRead(A2) < x))//left
+   /* else if((analogRead(A1)< x) || (analogRead(A2) < x))//left
     {
-      command1 = 1;//lefmotr speed
-      command2 = -1;//righmotr speed
+      command1 = 0;//lefmotr speed
+      command2 = 0;//righmotr speed
     }
       else if((analogRead(A4) < x) || (analogRead(A5) < x))//right
       {
-        command1 = -1;//lefmotr speed
-        command2 = 1;//righmotr speed
-      }
+        command1 = 3;//lefmotr speed
+        command2 = -3;//righmotr speed
+      }*/
         else
         {
           command1 = 0;//lefmotr speed
