@@ -1,8 +1,8 @@
 void track(void); //Speed control
 void track_setup(void); //pin set up
 
-float command1 = 0;//lefmotr speed rev/s
-float command2 = 0;//rightmotr speed rev/s
+float command1 = 0;//rightmotr speed rev/s
+float command2 = 0;//leftmotr speed rev/s
 
 void track_setup(void) //enabling line tracker sensors
 {
@@ -15,7 +15,7 @@ pinMode(A5, INPUT);
 
 void track(void)
 {
-  Serial.print(analogRead(A1));
+  Serial.print(analogRead(A1)); //rightmost
   Serial.print(" ");
   Serial.print(analogRead(A2));
   Serial.print(" ");
@@ -23,33 +23,35 @@ void track(void)
   Serial.print(" ");
   Serial.print(analogRead(A4));
   Serial.print(" ");
-  Serial.println(analogRead(A5));
-  int x = 550;
+  Serial.println(analogRead(A5)); //leftmost
+  int x = 850;
 
   /*if(analogRead(A1) > x && analogRead(A2) > x && analogRead(A3) > x && analogRead(A4) > x && analogRead(A5) > x)
   {
-      command1 = 0;//lefmotr speed
-      command2 = 0;//righmotr speed
+      command1 = 0;//rightmotr speed
+      command2 = 0;//righttmotr speed
   }  */
 
+//command1 = 3;
+//command2 = 0;
   if(analogRead(A3) < x)
   {
-      command1 = 3;//lefmotr speed
-      command2 = 3;//righmotr speed
+      command1 = 1;//rightmotr speed
+      command2 = 1;//lefthmotr speed
   }
-   /* else if((analogRead(A1)< x) || (analogRead(A2) < x))//left
+    else if((analogRead(A1)< x) || (analogRead(A2) < x))//left
     {
-      command1 = 0;//lefmotr speed
-      command2 = 0;//righmotr speed
+      command1 = -1;//rightmotr speed
+      command2 = 1;//leftmotr speed
     }
       else if((analogRead(A4) < x) || (analogRead(A5) < x))//right
       {
-        command1 = 3;//lefmotr speed
-        command2 = -3;//righmotr speed
-      }*/
+        command1 = 1;//rightmotr speed
+        command2 = -1;//leftmotr speed
+      }                                                                                        
         else
         {
-          command1 = 0;//lefmotr speed
-          command2 = 0;//righmotr speed      
+          command1 = -1;//rightmotr speed
+          command2 = -1;//leftmotr speed      
         }
 }

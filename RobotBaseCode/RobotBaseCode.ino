@@ -18,8 +18,8 @@ void loop(void)
   track();//line follower sensors
   get_current_status();
   
-  des_vel[0] = command1/14;//leftmotr speed
-  des_vel[1] = command2/14;//rightmotr speed
+  des_vel[0] = command1/14;//righttmotr speed
+  des_vel[1] = command2/14;//leftmotr speed
 
   low_level_control();//pid controller
 }
