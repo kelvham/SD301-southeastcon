@@ -1,8 +1,10 @@
 void track(void); //Speed control
 void track_setup(void); //pin set up
+void active_braking(void);
 
 float command1 = 0;//rightmotr speed rev/s
 float command2 = 0;//leftmotr speed rev/s
+int Brake = 0;
 
 void track_setup(void) //enabling line tracker sensors
 {
@@ -32,8 +34,6 @@ void track(void)
       command2 = 0;//righttmotr speed
   }  */
 
-//command1 = 3;
-//command2 = 0;
   if(analogRead(A3) < x)
   {
       command1 = 1;//rightmotr speed
@@ -46,8 +46,8 @@ void track(void)
     }
       else if((analogRead(A4) < x) || (analogRead(A5) < x))//right
       {
-        command1 = 1;//rightmotr speed
-        command2 = -1;//leftmotr speed
+          command1 = 1;//rightmotr speed
+          command2 = -1;//leftmotr speed
       }                                                                                        
         else
         {
