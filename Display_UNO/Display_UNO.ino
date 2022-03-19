@@ -10,7 +10,19 @@
 // TFT display and SD card share the hardware SPI interface, using
 // 'select' pins for each to identify the active device on the bus.
 
-#define SD_CS   4 // SD card select pin
+//PIN CONNECTIONS AS OF 2/18
+//LCD_PIN - COLOR - UNO_PIN
+//GND     - BLACK - GND
+//VIN     - RED   - 5V
+//D/C     - GREY  - 9
+//RESET   - NO CONNECTION
+//SD CS   - GREEN - 8
+//LCD CS  - BROWN - 10
+//MOSI    - YELLOW- 11
+//MISO    - WHITE - 12
+//SCK     - OLIVE - 13
+
+#define SD_CS   8 // SD card select pin
 #define TFT_CS 10 // TFT select pin
 #define TFT_DC  9 // TFT display/command pin
 
