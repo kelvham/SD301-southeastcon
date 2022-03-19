@@ -106,9 +106,9 @@ void Enc1();
 
 void encoder_init(void)
 {
-  pinMode(2, INPUT_PULLUP); //Encoder 0 CHA
+  pinMode(2, INPUT_PULLUP); //Encoder 0 CHA Left MOTOR
   pinMode(3, INPUT_PULLUP); //Encoder 0 CHB
-  pinMode(18, INPUT_PULLUP); //Encoder 1 CHA
+  pinMode(18, INPUT_PULLUP); //Encoder 1 CHA Right MOTOR
   pinMode(19, INPUT_PULLUP); //Encoder 1 CHB
   attachInterrupt(digitalPinToInterrupt(2), Enc0, RISING);
   attachInterrupt(digitalPinToInterrupt(18), Enc1, RISING);
@@ -124,6 +124,7 @@ void Enc0()
   {
     encoder0_val--;
   }
+  
 }
 
 void Enc1()
@@ -136,6 +137,7 @@ void Enc1()
   {
     encoder1_val--;
   }
+  
 }
 
 //PD control stuff----------------------------------------------------------------------------------------
