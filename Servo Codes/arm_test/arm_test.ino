@@ -8,7 +8,9 @@
 */
  
 #include <Servo.h>
- 
+#include <Pixy2.h>
+
+Pixy2 pixy; 
 Servo hand;  // create servo object to control a servo
 Servo elbow;  // create servo object to control a servo
 Servo shoulder;  // create servo object to control a servo
@@ -46,15 +48,30 @@ void setup() {
   elbow.attach(27);  // attaches the servo on pin 9 to the servo object
   shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
   catapult.attach(31);
-}
- 
-void loop() {
   rotator.write(ROTATOR_CLOSE);
   hand.write(HAND_CLOSE);
   elbow.write(ELBOW_CLOSE);
   shoulder.write(SHOULDER_CLOSE);
   catapult.write(CATAPULT_DOWN);
-  
+  Serial.begin(9600);
+  pixy.init();
+}
+ 
+void loop() {
+
+  rotator.write(ROTATOR_CLOSE);
+  hand.write(HAND_CLOSE);
+  elbow.write(ELBOW_CLOSE);
+  shoulder.write(SHOULDER_CLOSE);
+  catapult.write(CATAPULT_DOWN);
+
+  pixy.ccc.getBlocks();
+
+  if (pixy.ccc.numBlocks)
+  {
+  //**************************
+  //Start Bead Grab Procedure
+  //**************************
 
   delay(1000);
 
@@ -140,6 +157,12 @@ void loop() {
 
 
   delay(5000);
+
+  //****************************************
+  //End Bead Grab Procedure
+  //****************************************
+
+  
   //****************************************
   //Start launch procedure
   //****************************************
@@ -162,7 +185,12 @@ void loop() {
     delay(5000);
   
     catapult.write(CATAPULT_DOWN);
+
+  //****************************************
+  //End launch procedure
+  //****************************************
   while(1);
+  }
 
   
 }
