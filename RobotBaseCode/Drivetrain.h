@@ -195,6 +195,10 @@ void low_level_control(void)
   float Kd = 0.5; //0.5;
   float volt[2] = {0,0};
   int duty = 0;
+/*
+  Serial.print(cur_pos[0]);
+  Serial.print(" ");
+  Serial.println(cur_pos[1]);*/
   
   volt[0] = Kp*(des_pos[0]-cur_pos[0]) + Ki*((des_pos[0] - cur_pos[0])*T) + Kd*(des_vel[0]-cur_vel[0]);
   volt[1] = Kp*(des_pos[1]-cur_pos[1]) + Ki*((des_pos[1] - cur_pos[1])*T) + Kd*(des_vel[1]-cur_vel[1]);

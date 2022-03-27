@@ -1,11 +1,11 @@
-#include "RobotBaseCode.h"
-//#include "IRSense.h"
+#include "Drivetrain.h"
+//#include "RaspCommands.h"
 #include "LineTrack.h"
 
 void setup()
 {
   set_up_timer();
-  //sense_setup();
+  //read_setup();
   track_setup();
   motor_init();
   encoder_init();
@@ -22,6 +22,16 @@ void loop(void)
   des_vel[1] = command2/14;//rightmotor speed
 
   low_level_control();//pid controller
+
+  if (cur_pos[1] == 11.26)
+  {
+    des_vel[0] = 1/14;//leftmotor speed
+    des_vel[1] = -1/14;//rightmotor speed
+    delay(500);
+    des_vel[0] = 0;//leftmotor speed
+    des_vel[1] = 0;//rightmotor speed
+  }
+  
   //Serial.print(encoder0_val);
   //Serial.print(" ");
   //Serial.println(encoder1_val);
