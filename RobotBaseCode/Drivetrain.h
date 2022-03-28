@@ -185,6 +185,10 @@ void get_current_status(void)
   prev_pos[1] = cur_pos[1];
   des_pos[1] = prev_des_pos[1] + des_vel[1]*T;
   prev_des_pos[1] = des_pos[1];
+
+//  Serial.println(encoder0_val);
+//  Serial.println(" ");
+//  Serial.println(encoder1_val);
 }
 
 void low_level_control(void)
