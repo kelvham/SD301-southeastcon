@@ -2,10 +2,9 @@ void track(void); //Speed control
 void track_setup(void); //pin set up
 void active_braking(void);
 
-float command1 = 0;//rightmotr speed rev/s
-float command2 = 0;//leftmotr speed rev/s
+float command1 = 0;//leftmotr speed rev/s
+float command2 = 0;//rightmotr speed rev/s
 int Brake = 0;
-<<<<<<< HEAD
 int Out_R;
 int R;
 int Mid_R;
@@ -26,21 +25,20 @@ int index = 0;
 int sums[7];
 int readings[30][7];
 int flag = 1;
-=======
->>>>>>> parent of 2199e96 (Line Tacking Update)
 
 void track_setup(void) //enabling line tracker sensors
 {
-pinMode(A1, INPUT);
-pinMode(A2, INPUT);
-pinMode(A3, INPUT);
-pinMode(A4, INPUT);
-pinMode(A5, INPUT);
+pinMode(A2, INPUT); //out right
+pinMode(A3, INPUT); //right
+pinMode(A1, INPUT); //right middle
+pinMode(A4, INPUT); //middle
+pinMode(A7, INPUT); //left middle
+pinMode(A5, INPUT); //left
+pinMode(A6, INPUT); //out left
 }
 
 void track(void)
 {
-<<<<<<< HEAD
   //Low Pass Filter for the sensor readings
   int data[] = {analogRead(A7), analogRead(A6), analogRead(A5), analogRead(A4), analogRead(A3), analogRead(A2), analogRead(A1)};
 
@@ -63,17 +61,13 @@ void track(void)
   Out_R = data[6];
   
   Serial.print(Out_L);
-=======
-  Serial.print(analogRead(A1)); //rightmost
->>>>>>> parent of 2199e96 (Line Tacking Update)
   Serial.print(" ");
-  Serial.print(analogRead(A2));
+  Serial.print(L);
   Serial.print(" ");
-  Serial.print(analogRead(A3));
+  Serial.print(Mid_L);
   Serial.print(" ");
-  Serial.print(analogRead(A4));
+  Serial.print(Mid);
   Serial.print(" ");
-<<<<<<< HEAD
   Serial.print(Mid_R);
   Serial.print(" ");
   Serial.print(R);
@@ -240,35 +234,4 @@ void track(void)
     n = 0;
   }
 
-=======
-  Serial.println(analogRead(A5)); //leftmost
-  int x = 850;
-
-  /*if(analogRead(A1) > x && analogRead(A2) > x && analogRead(A3) > x && analogRead(A4) > x && analogRead(A5) > x)
-  {
-      command1 = 0;//rightmotr speed
-      command2 = 0;//righttmotr speed
-  }  */
-
-  if(analogRead(A3) < x)
-  {
-      command1 = 1;//rightmotr speed
-      command2 = 1;//lefthmotr speed
-  }
-    else if((analogRead(A1)< x) || (analogRead(A2) < x))//left
-    {
-      command1 = -1;//rightmotr speed
-      command2 = 1;//leftmotr speed
-    }
-      else if((analogRead(A4) < x) || (analogRead(A5) < x))//right
-      {
-          command1 = 1;//rightmotr speed
-          command2 = -1;//leftmotr speed
-      }                                                                                        
-        else
-        {
-          command1 = -1;//rightmotr speed
-          command2 = -1;//leftmotr speed      
-        }
->>>>>>> parent of 2199e96 (Line Tacking Update)
 }
