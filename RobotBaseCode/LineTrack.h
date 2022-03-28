@@ -80,14 +80,14 @@ void track(void)
   Serial.print(" ");
   Serial.println(Out_R);
 
-  if((Out_R > x) && (Out_L > x) && (L > x) && (R > x))
+  if((Out_R < x) && (Out_L < x) && (L < x) && (R < x))
   {
      command1 = 2;
      command2 = 2;
   }
-  else if((Out_R > x) || (Out_L > x))
+  else if((Out_R < x) || (Out_L < x))
     {
-      if(Out_L > x)
+      if(Out_L < x)
       { 
         wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[2],2);
         command1 = -1*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
@@ -102,9 +102,9 @@ void track(void)
         n = 5;
       }
     }
-  else if ((L > x) || (R > x))
+  else if ((L < x) || (R < x))
     {
-      if(L > x)
+      if(L < x)
       { 
         wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[1],2);
         command1 = -1*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
@@ -119,9 +119,9 @@ void track(void)
         n = 3;
       }
     }
-    else if ((Mid_L > x) || (Mid_R > x))
+    else if ((Mid_L < x) || (Mid_R < x))
     {
-      if(Mid_L > x)
+      if(Mid_L < x)
       { 
         //wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[0],2);
         command1 = v;//-1*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
@@ -136,7 +136,7 @@ void track(void)
         n = 1;
       }
     }                                                                                   
-  else if(Mid > x)
+  else if(Mid < x)
   {
     if(n == 2)
     {
