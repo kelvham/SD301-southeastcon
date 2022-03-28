@@ -1,4 +1,3 @@
-
 void track(void); //Speed control
 void track_setup(void); //pin set up
 void active_braking(void);
