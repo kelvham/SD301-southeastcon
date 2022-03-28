@@ -18,12 +18,13 @@ float LookAhead_Dis[3] = {0.1513, 0.1552, 0.1616}; //[outside L/R sens, L/R sens
 float LookAhead_Ycomp = 0.15; //[outside L/R sens, L/R sens] in meters
 float WheelDis = 0.215; //in meters
 float wheelRad = 0.0575; //in meters
-int x = 55;
+int x = 42;
 int n = 0;
 int v = 1.5;
 int index = 0;
 int sums[7];
-int readings[25][7];
+int readings[30][7];
+int flag = 1;
 
 void track_setup(void) //enabling line tracker sensors
 {
@@ -46,9 +47,9 @@ void track(void)
     sums[d] = sums[d] - readings[index][d];
     readings[index][d] = data[d];
     sums[d] = sums[d] + readings[index][d];
-    data[d] = sums[d]/25; 
+    data[d] = sums[d]/30; 
   } 
-  index = (index + 1)%25;
+  index = (index + 1)%30;
 
   //sensor values
   Out_L = data[0];
@@ -73,8 +74,39 @@ void track(void)
   Serial.print(" ");
   Serial.println(Out_R);
   Serial.print(" ");
+  Serial.println(cur_pos[1]);
 
-    if ((Out_L > x) && (L > x) && (Mid_L > x) && (Mid > x) && (Mid_R > x) && (R > x) && (Out_R > x))
+  float current_position = (cur_pos[0] + cur_pos[1])/2;
+  if (current_position > 8)
+  {
+    if (flag == 1)
+    {
+      command1 = -20;//leftmotor speed
+      command2 = 20;//rightmotor speed
+      flag++;
+    }
+    if (flag == 2)
+    {
+      get_current_status();
+      des_vel[0] = (command1*1.10)/14;//leftmotor speed
+      des_vel[1] = command2/14;//rightmotor speed
+      low_level_control();//pid controller
+      flag++;
+    }
+    if (flag > 2)
+    {
+      for (flag = 1; flag < 2000; flag++);
+      flag = 0;
+    }
+  }
+  else if (current_position > 17)
+  {
+      des_vel[0] = 0;//leftmotor speed
+      des_vel[1] = 0;//rightmotor speed
+      low_level_control();//pid controller
+      return;
+  }
+    else if ((Out_L > x) && (L > x) && (Mid_L > x) && (Mid > x) && (Mid_R > x) && (R > x) && (Out_R > x))
     {
       command1 = -1;
       command2 = -1;
@@ -88,45 +120,45 @@ void track(void)
       case 1: 
         break;
         //wr = -1*(2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[0],2);
-        command1 = v*1.1;//((2*PI*v*wheelRad) - (WheelDis/2)*wr);
+        command1 = v;//*1.1;//((2*PI*v*wheelRad) - (WheelDis/2)*wr);
         command2 = v;//-1*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         break;
       case 2:
         break;
         //wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[0],2);
         command1 = v;//-1*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
-        command2 = v*1.1;//((2*PI*v*wheelRad) + (WheelDis/2)*wr);
+        command2 = v;//*1.1;//((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         break;
       case 3:
         break;
         wr = -1*(2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[1],2);
         command1 = 2*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
-        command2 = 2*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
+        command2 = -.75*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         break;
       case 4:
         break;
         wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[1],2);
-        command1 = 1.25*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
+        command1 = -.75*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
         command2 = 1.25*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         break;
       case 5:
         break;
         wr = -1*(2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[2],2);
-        command1 = 3*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
-        command2 = 3*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
+        command1 = 2*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
+        command2 = -1*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         break;
       case 6:
         break;
         wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[2],2);
-        command1 = 3*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
-        command2 = 3*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
+        command1 = -1*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
+        command2 = 2*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         break;
       }
     }
-  else if((Out_R < x) && (Out_L < x) && (L < x) && (R < x))
+  else if(current_position < .25)
   {
-     command1 = 2;//*1.10;
-     command2 = 2;
+     command1 = 5;//*1.10;
+     command2 = 5;
   }
   else if(((Out_R < Out_L) && (Out_R < L) && (Out_R < Mid_L) && (Out_R < Mid) && (Out_R < Mid_R) && (Out_R < R))  || 
           ((Out_L < Out_R) && (Out_L < L) && (Out_L < Mid_L) && (Out_L < Mid) && (Out_L < Mid_R) && (Out_L < R)))
@@ -134,7 +166,7 @@ void track(void)
       if((Out_L < Out_R) && (Out_L < L) && (Out_L < Mid_L) && (Out_L < Mid) && (Out_L < Mid_R) && (Out_L < R))
       { 
         wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[2],2);
-        command1 = 2*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
+        command1 = -1*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
         command2 = 2*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         n = 6;
       }
@@ -142,7 +174,7 @@ void track(void)
       {
         wr = -1*(2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[2],2);
         command1 = 2*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
-        command2 = 2*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
+        command2 = -1*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         n = 5;
       }
     }
@@ -152,7 +184,7 @@ void track(void)
       if((L < Out_R) && (L < Out_L) && (L < Mid_L) && (L < Mid) && (L < Mid_R) && (L < R))
       { 
         wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[1],2);
-        command1 = 1.5*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
+        command1 = -.75*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
         command2 = 1.5*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         n = 4;
       }
@@ -160,7 +192,7 @@ void track(void)
       {
         wr = -1*(2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[1],2);
         command1 = 1.5*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
-        command2 = 1.5*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
+        command2 = -.75*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         n = 3;
       }
     }
@@ -171,13 +203,13 @@ void track(void)
       { 
         //wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[0],2);
         command1 = v;//-1*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
-        command2 = v*1.2;//((2*PI*v*wheelRad) + (WheelDis/2)*wr);
+        command2 = v;//*1.2;//((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         n = 2;
       }
       else
       {
         //wr = -1*(2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[0],2);
-        command1 = v*1.2;//((2*PI*v*wheelRad) - (WheelDis/2)*wr);
+        command1 = v;//*1.2;//((2*PI*v*wheelRad) - (WheelDis/2)*wr);
         command2 = v;//-1*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         n = 1;
       }
@@ -186,13 +218,13 @@ void track(void)
   {
     if(n == 2)
     {
-      command1 = v*1.2;
+      command1 = v;//*1.2;
       command2 = v;
     }
     else if (n == 1)
     {
       command1 = v;
-      command2 = v*1.2;
+      command2 = v;//*1.2;
     }
     else
     {

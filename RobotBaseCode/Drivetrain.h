@@ -143,7 +143,7 @@ void Enc1()
 //PD control stuff----------------------------------------------------------------------------------------
 #define END_CPR     100
 #define Gear_Ratio  50
-#define T           0.1  // 100 msec
+#define T           0.1 //.1  // 100 msec
 
 float des_vel[2] = {0,0};
 float cur_vel[2] = {0,0};
