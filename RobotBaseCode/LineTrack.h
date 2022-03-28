@@ -1,3 +1,4 @@
+
 void track(void); //Speed control
 void track_setup(void); //pin set up
 void active_braking(void);
@@ -44,9 +45,10 @@ void track(void)
   //Low Pass Filter for the sensor readings
   left = 0;
   right = 0;
-  int data[] = {analogRead(A7), analogRead(A6), analogRead(A5), analogRead(A4), analogRead(A3), analogRead(A2), analogRead(A1), analogRead(A0)};
+  
+  int data[] = {analogRead(A7), analogRead(A6), analogRead(A5), analogRead(A4), analogRead(A3), analogRead(A2), analogRead(A1)};
 
-  for(int d = 0; d < 7; d++)
+  for(int d = 0; d < 6; d++)
   {
     sums[d] = sums[d] - readings[index][d];
     readings[index][d] = data[d];
