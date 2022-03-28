@@ -23,7 +23,7 @@ int n = 0;
 int v = 1.5;
 int index = 0;
 int sums[7];
-int readings[30][7];
+int readings[25][7];
 
 void track_setup(void) //enabling line tracker sensors
 {
@@ -36,15 +36,9 @@ pinMode(A5, INPUT); //left
 pinMode(A6, INPUT); //out left
 }
 
-int left;
-int right;
-
 void track(void)
 {
   //Low Pass Filter for the sensor readings
-  left = 0;
-  right = 0;
-  
   int data[] = {analogRead(A7), analogRead(A6), analogRead(A5), analogRead(A4), analogRead(A3), analogRead(A2), analogRead(A1)};
 
   for(int d = 0; d < 6; d++)
@@ -52,9 +46,9 @@ void track(void)
     sums[d] = sums[d] - readings[index][d];
     readings[index][d] = data[d];
     sums[d] = sums[d] + readings[index][d];
-    data[d] = sums[d]/30; 
+    data[d] = sums[d]/25; 
   } 
-  index = (index + 1)%30;
+  index = (index + 1)%25;
 
   //sensor values
   Out_L = data[0];
@@ -177,13 +171,13 @@ void track(void)
       { 
         //wr = (2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[0],2);
         command1 = v;//-1*((2*PI*v*wheelRad) - (WheelDis/2)*wr);
-        command2 = v*1.1;//((2*PI*v*wheelRad) + (WheelDis/2)*wr);
+        command2 = v*1.2;//((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         n = 2;
       }
       else
       {
         //wr = -1*(2*(2*PI*v*wheelRad)*LookAhead_Ycomp)/pow(LookAhead_Dis[0],2);
-        command1 = v*1.1;//((2*PI*v*wheelRad) - (WheelDis/2)*wr);
+        command1 = v*1.2;//((2*PI*v*wheelRad) - (WheelDis/2)*wr);
         command2 = v;//-1*((2*PI*v*wheelRad) + (WheelDis/2)*wr);
         n = 1;
       }
@@ -202,8 +196,8 @@ void track(void)
     }
     else
     {
-    command1 = v;
-    command2 = v;
+      command1 = v;
+      command2 = v;
     }
     n = 0;
   }
