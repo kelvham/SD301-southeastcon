@@ -99,7 +99,6 @@ void track(void)
   }
   else if (current_position > 1.4 && tree1 == 0)
   {
-    return;
     tree1 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed
@@ -108,6 +107,7 @@ void track(void)
     des_vel[1] = (command2/2)/14;//rightmotor speed
     low_level_control();//pid controller
     for (int z = 1; z < 20000; z++);
+    return;
   }
   else if (current_position > 2.03 && flag1 == 0)
   {
