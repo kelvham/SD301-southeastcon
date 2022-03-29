@@ -24,7 +24,7 @@ int v = 1.5;
 int index = 0;
 int sums[7];
 int readings[30][7];
-bool flag = 0;
+bool flag = 0, flag1 = 0, flag2 = 0, flag3 = 0, flag4 = 0, flag5 = 0, flag6 = 0, flag7 = 0, tree1 = 0, tree2 = 0;
 
 void track_setup(void) //enabling line tracker sensors
 {
@@ -97,6 +97,94 @@ void track(void)
       low_level_control();//pid controller
       return;
   }
+  else if (current_position > 1.4 && tree1 == 0)
+  {
+    tree1 = 1;
+    command1 = 0;//leftmotor speed
+    command2 = 0;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
+  }
+  else if (current_position > 2.03 && flag1 == 0)
+  {
+    flag1 = 1;
+    command1 = 0;//leftmotor speed
+    command2 = 0;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
+  }
+  else if (current_position > 100 && flag2 == 0)
+  {
+    flag2 = 1;
+    command1 = 0;//leftmotor speed
+    command2 = 0;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
+  }
+  else if (current_position > 4.24 && flag3 == 0)
+  {
+    flag3 = 1;
+    command1 = 0;//leftmotor speed
+    command2 = 0;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
+  }
+  else if (current_position > 7.16 && tree2 == 0)
+  {
+    tree2 = 1;
+    command1 = 0;//leftmotor speed
+    command2 = 0;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
+  }
+  else if (current_position > 8.24 && flag4 == 0)
+  {
+    flag4 = 1;
+    command1 = 0;//leftmotor speed
+    command2 = 0;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
+  }
+  else if (current_position > 8.83 && flag5 == 0)
+  {
+    flag5 = 1;
+    command1 = 0;//leftmotor speed
+    command2 = 0;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
+  }
+  else if (current_position > 12.63 && flag6 == 0)
+  {
+    flag6 = 1;
+    command1 = 0;//leftmotor speed
+    command2 = 0;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
+  }
     else if ((Out_L > x) && (L > x) && (Mid_L > x) && (Mid > x) && (Mid_R > x) && (R > x) && (Out_R > x))
     {
       command1 = -.5;
@@ -146,10 +234,10 @@ void track(void)
         break;
       }
     }
-  else if(current_position < .25)
+  else if(current_position < .15)
   {
-     command1 = 5;//*1.10;
-     command2 = 5;
+     command1 = 3;//*1.10;
+     command2 = 3;
   }
   else if(((Out_R < Out_L) && (Out_R < L) && (Out_R < Mid_L) && (Out_R < Mid) && (Out_R < Mid_R) && (Out_R < R))  || 
           ((Out_L < Out_R) && (Out_L < L) && (Out_L < Mid_L) && (Out_L < Mid) && (Out_L < Mid_R) && (Out_L < R)))
