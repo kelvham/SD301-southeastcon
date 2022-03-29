@@ -71,8 +71,8 @@ void loop() {
  Serial.print(F("Loading logos.bmp to screen..."));
  reader.drawBMP("/logos.bmp", tft, 0, 0);
 
- delay(6000);
- tft.fillScreen(ILI9341_BLACK);
+ //delay(6000);
+ //tft.fillScreen(ILI9341_BLACK);
  
- exit(1);
+// exit(1);
 }
