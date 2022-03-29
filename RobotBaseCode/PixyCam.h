@@ -5,9 +5,7 @@ Pixy2 pixy;
 
 void read_setup(void)
 {
-  const int Command_Length = 12;
-  static char RasComm[Command_Length];
-  static unsigned int Command_Pos = 0;
+  pixy.init();
 }
 
 void sense(void)
