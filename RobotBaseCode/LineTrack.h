@@ -25,6 +25,7 @@ int index = 0;
 int sums[7];
 int readings[30][7];
 bool flag = 0, flag1 = 0, flag2 = 0, flag3 = 0, flag4 = 0, flag5 = 0, flag6 = 0, flag7 = 0, tree1 = 0, tree2 = 0;
+float current_position = (cur_pos[0] + cur_pos[1])/2;
 
 void track_setup(void) //enabling line tracker sensors
 {
@@ -39,6 +40,7 @@ pinMode(A6, INPUT); //out left
 
 void track(void)
 {
+  current_position = (cur_pos[0] + cur_pos[1])/2;
   //Low Pass Filter for the sensor readings
   int data[] = {analogRead(A7), analogRead(A6), analogRead(A5), analogRead(A4), analogRead(A3), analogRead(A2), analogRead(A1)};
 
@@ -76,8 +78,6 @@ void track(void)
   Serial.print(" ");
   Serial.print(flag);
   Serial.print(" ");
-
-  float current_position = (cur_pos[0] + cur_pos[1])/2;
   Serial.println(current_position);
   if (current_position > 8 && flag == 0) //8
   {
@@ -90,13 +90,6 @@ void track(void)
     low_level_control();//pid controller
     for (int z = 1; z < 2000; z++);
   }
-  else if (current_position > 17)
-  {
-      des_vel[0] = 0;//leftmotor speed
-      des_vel[1] = 0;//rightmotor speed
-      low_level_control();//pid controller
-      return;
-  }
   else if (current_position > 1.4 && tree1 == 0)
   {
     tree1 = 1;
@@ -107,7 +100,6 @@ void track(void)
     des_vel[1] = (command2/2)/14;//rightmotor speed
     low_level_control();//pid controller
     for (int z = 1; z < 20000; z++);
-    return;
   }
   else if (current_position > 2.03 && flag1 == 0)
   {

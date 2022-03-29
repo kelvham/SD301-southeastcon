@@ -17,9 +17,8 @@ void loop(void)
   //sense();//ir senseor for object detectiom
   track();//line follower sensors
   get_current_status();
-  float current_position = (cur_pos[0] + cur_pos[1])/2;
 
-  if (current_position > 1)
+  if (current_position > 17)
   {
       des_vel[0] = 0;//leftmotor speed
       des_vel[1] = 0;//rightmotor speed
