@@ -8,15 +8,6 @@
 */
  
 #include <Servo.h>
-#include <Pixy2.h>
-
-Pixy2 pixy; 
-Servo hand;  // create servo object to control a servo
-Servo elbow;  // create servo object to control a servo
-Servo shoulder;  // create servo object to control a servo
-Servo rotator;
-Servo catapult;
-// twelve servo objects can be created on most boards
 
 int CATAPULT_DOWN = 170;
 int CATAPULT_UP = 40;
@@ -41,8 +32,15 @@ int HAND_HALFOPEN = (HAND_CLOSE+HAND_OPEN)/2;
 int ELBOW_HALFOPEN = (ELBOW_CLOSE+ELBOW_OPEN)/2;
 
 int SHOULDER_HALFOPEN = (SHOULDER_CLOSE+SHOULDER_OPEN)/2;
- 
-void setup() {
+
+  Servo hand;  // create servo object to control a servo
+  Servo elbow;  // create servo object to control a servo
+  Servo shoulder;  // create servo object to control a servo
+  Servo rotator;
+  Servo catapult;
+
+void armcat_init(void)
+{
   rotator.attach(23);
   hand.attach(25);  // attaches the servo on pin 9 to the servo object
   elbow.attach(27);  // attaches the servo on pin 9 to the servo object
@@ -54,10 +52,9 @@ void setup() {
   shoulder.write(SHOULDER_CLOSE);
   catapult.write(CATAPULT_DOWN);
   Serial.begin(9600);
-  pixy.init();
 }
  
-void loop() {
+void collect(void) {
 
   rotator.write(ROTATOR_CLOSE);
   hand.write(HAND_CLOSE);
@@ -65,10 +62,10 @@ void loop() {
   shoulder.write(SHOULDER_CLOSE);
   catapult.write(CATAPULT_DOWN);
 
-  pixy.ccc.getBlocks();
+//  pixy.ccc.getBlocks();
 
-  if (pixy.ccc.numBlocks)
-  {
+//  if (pixy.ccc.numBlocks)
+ // {
   //**************************
   //Start Bead Grab Procedure
   //**************************
@@ -190,7 +187,7 @@ void loop() {
   //End launch procedure
   //****************************************
   while(1);
-  }
+  //}
 
   
 }

@@ -1,6 +1,6 @@
 #include "Drivetrain.h"
 #include "LineTrack.h"
-//#include "BeadCollectLaunch.h"
+#include "BeadCollectLaunch.h"
 
 void setup()
 {
@@ -9,6 +9,7 @@ void setup()
   track_setup();
   motor_init();
   encoder_init();
+  armcat_init();
   Serial.begin(9600);
 }
 
@@ -18,7 +19,7 @@ void loop(void)
   track();//line follower sensors
   get_current_status();
 
-  if (current_position > 16)
+  if (current_position > 15.5)
   {
       des_vel[0] = 0;//leftmotor speed
       des_vel[1] = 0;//rightmotor speed

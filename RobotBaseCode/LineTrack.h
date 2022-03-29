@@ -1,3 +1,5 @@
+#include <Pixy2.h>
+
 void track(void); //Speed control
 void track_setup(void); //pin set up
 void active_braking(void);
@@ -26,16 +28,18 @@ int sums[7];
 int readings[30][7];
 bool flag = 0, flag1 = 0, flag2 = 0, flag3 = 0, flag4 = 0, flag5 = 0, flag6 = 0, flag7 = 0, tree1 = 0, tree2 = 0;
 float current_position = (cur_pos[0] + cur_pos[1])/2;
+Pixy2 pixy;
 
 void track_setup(void) //enabling line tracker sensors
 {
-pinMode(A2, INPUT); //out right
-pinMode(A3, INPUT); //right
-pinMode(A1, INPUT); //right middle
-pinMode(A4, INPUT); //middle
-pinMode(A7, INPUT); //left middle
-pinMode(A5, INPUT); //left
-pinMode(A6, INPUT); //out left
+  pinMode(A2, INPUT); //out right
+  pinMode(A3, INPUT); //right
+  pinMode(A1, INPUT); //right middle
+  pinMode(A4, INPUT); //middle
+  pinMode(A7, INPUT); //left middle
+  pinMode(A5, INPUT); //left
+  pinMode(A6, INPUT); //out left
+  pixy.init();
 }
 
 void track(void)
