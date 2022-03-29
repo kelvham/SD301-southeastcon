@@ -24,7 +24,7 @@ int v = 1.5;
 int index = 0;
 int sums[7];
 int readings[30][7];
-int flag = 1;
+bool flag = 0;
 
 void track_setup(void) //enabling line tracker sensors
 {
@@ -72,32 +72,23 @@ void track(void)
   Serial.print(" ");
   Serial.print(R);
   Serial.print(" ");
-  Serial.println(Out_R);
+  Serial.print(Out_R);
   Serial.print(" ");
-  Serial.println(cur_pos[1]);
+  Serial.print(flag);
+  Serial.print(" ");
 
   float current_position = (cur_pos[0] + cur_pos[1])/2;
-  if (current_position > 8)
+  Serial.println(current_position);
+  if (current_position > 8 && flag == 0) //8
   {
-    if (flag == 1)
-    {
-      command1 = -20;//leftmotor speed
-      command2 = 20;//rightmotor speed
-      flag++;
-    }
-    if (flag == 2)
-    {
-      get_current_status();
-      des_vel[0] = (command1*1.10)/14;//leftmotor speed
-      des_vel[1] = command2/14;//rightmotor speed
-      low_level_control();//pid controller
-      flag++;
-    }
-    if (flag > 2)
-    {
-      for (flag = 1; flag < 2000; flag++);
-      flag = 0;
-    }
+    flag = 1;
+    command1 = -100;//leftmotor speed
+    command2 = 100;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
   }
   else if (current_position > 17)
   {
@@ -108,8 +99,8 @@ void track(void)
   }
     else if ((Out_L > x) && (L > x) && (Mid_L > x) && (Mid > x) && (Mid_R > x) && (R > x) && (Out_R > x))
     {
-      command1 = -1;
-      command2 = -1;
+      command1 = -.5;
+      command2 = -.5;
       switch (n)
       {
       case 0: 
