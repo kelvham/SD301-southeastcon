@@ -99,6 +99,7 @@ void track(void)
   }
   else if (current_position > 1.4 && tree1 == 0)
   {
+    return;
     tree1 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed
