@@ -18,7 +18,7 @@ void loop(void)
   track();//line follower sensors
   get_current_status();
 
-  if (current_position > 17)
+  if (current_position > 16)
   {
       des_vel[0] = 0;//leftmotor speed
       des_vel[1] = 0;//rightmotor speed
