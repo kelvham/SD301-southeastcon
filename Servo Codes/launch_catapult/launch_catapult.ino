@@ -1,3 +1,5 @@
+//top board code
+
 /* Sweep
  by BARRAGAN <http://barraganstudio.com>
  This example code is in the public domain.
@@ -43,11 +45,11 @@ int ELBOW_HALFOPEN = (ELBOW_CLOSE+ELBOW_OPEN)/2;
 int SHOULDER_HALFOPEN = (SHOULDER_CLOSE+SHOULDER_OPEN)/2;
  
 void setup() {
-  rotator.attach(23);
-  hand.attach(25);  // attaches the servo on pin 9 to the servo object
-  elbow.attach(27);  // attaches the servo on pin 9 to the servo object
-  shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
-  catapult.attach(31);
+//  rotator.attach(23);
+//  hand.attach(25);  // attaches the servo on pin 9 to the servo object
+//  elbow.attach(27);  // attaches the servo on pin 9 to the servo object
+//  shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
+//  catapult.attach(31);
   rotator.write(ROTATOR_CLOSE);
   hand.write(HAND_CLOSE);
   elbow.write(ELBOW_CLOSE);
@@ -55,31 +57,57 @@ void setup() {
   catapult.write(CATAPULT_DOWN);
   Serial.begin(9600);
   pixy.init();
-  pinMode(49, INPUT);
-  pinMode(47, OUTPUT);
+  pinMode(33, OUTPUT); //output to bottom board
+  //pinMode(35, INPUT); //input from bottom board
+  pinMode(37, INPUT); //input from bottom board
+  pinMode(39, INPUT); //input from bottom board
 }
  
-void loop() {
-
-  rotator.write(ROTATOR_CLOSE);
-  hand.write(HAND_CLOSE);
-  elbow.write(ELBOW_CLOSE);
-  shoulder.write(SHOULDER_CLOSE);
-  catapult.write(CATAPULT_DOWN);
-
-  pixy.ccc.getBlocks();
-
-  if (digitalRead(49) == HIGH)
+void loop() 
+{
+  rotator.detach();
+  hand.detach();  // attaches the servo on pin 9 to the servo object
+  elbow.detach();  // attaches the servo on pin 9 to the servo object
+  shoulder.detach();  // attaches the servo on pin 9 to the servo object
+  //catapult.detach();
+  if (digitalRead(37) == 1) //launch input
   {
-    digitalWrite(47, HIGH);
+    pixy.ccc.getBlocks();
+    if (pixy.ccc.numBlocks)
+    {
+        rotator.attach(23);
+  hand.attach(25);  // attaches the servo on pin 9 to the servo object
+  elbow.attach(27);  // attaches the servo on pin 9 to the servo object
+  shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
+  catapult.attach(31);
+      digitalWrite(33, HIGH);
+      launch();
+      digitalWrite(33, LOW);
+    }
   }
-  else
+  else if (digitalRead(39) == 0) //collect input
   {
-    digitalWrite(47, LOW);
+      rotator.attach(23);
+  hand.attach(25);  // attaches the servo on pin 9 to the servo object
+  elbow.attach(27);  // attaches the servo on pin 9 to the servo object
+  shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
+  catapult.attach(31);
+    digitalWrite(33, HIGH);
+    collect();
+    digitalWrite(33, LOW);
   }
+//  else
+//  {
+//    rotator.write(ROTATOR_CLOSE);
+//    hand.write(HAND_CLOSE);
+//    elbow.write(ELBOW_CLOSE);
+//    shoulder.write(SHOULDER_CLOSE);
+//    catapult.write(CATAPULT_DOWN);
+//  }
+}
 
-  if (pixy.ccc.numBlocks)
-  {
+void collect(void)
+{
   //**************************
   //Start Bead Grab Procedure
   //**************************
@@ -90,7 +118,13 @@ void loop() {
   shoulder.write(SHOULDER_OPEN);
   hand.write(HAND_OPEN);
 
-  delay(5000);
+  delay(2000);
+
+  rotator.write(ROTATOR_CLOSE);
+  delay(1000);
+  rotator.write(ROTATOR_CLOSE - 30);
+  
+  delay(2000);
 
   hand.write(HAND_CLOSE);
 
@@ -172,36 +206,34 @@ void loop() {
   //****************************************
   //End Bead Grab Procedure
   //****************************************
+}
 
-  
+void launch(void)
+{
   //****************************************
   //Start launch procedure
   //****************************************
-    shoulder.write(SHOULDER_CATAPULT);
-    elbow.write(ELBOW_TENSION);
-    rotator.write(ROTATOR_CATAPULT);
-    hand.write(HAND_CLOSE);
-    
-    delay(1000);
+  shoulder.write(SHOULDER_CATAPULT);
+  elbow.write(ELBOW_TENSION);
+  rotator.write(ROTATOR_CATAPULT);
+  hand.write(HAND_CLOSE);
+     
+  delay(1000);
   
-    catapult.write(CATAPULT_UP);
+  catapult.write(CATAPULT_UP);
   
-    delay(3000);
+  delay(3000);
   
-    rotator.write(ROTATOR_CLOSE);
-    hand.write(HAND_CLOSE);
-    elbow.write(ELBOW_CLOSE);
-    shoulder.write(SHOULDER_CLOSE);
+  rotator.write(ROTATOR_CLOSE);
+  hand.write(HAND_CLOSE);
+  elbow.write(ELBOW_CLOSE);
+  shoulder.write(SHOULDER_CLOSE);
   
-    delay(5000);
+  delay(5000);
   
-    catapult.write(CATAPULT_DOWN);
+  catapult.write(CATAPULT_DOWN);
 
   //****************************************
   //End launch procedure
   //****************************************
-  while(1);
-  }
-
-  
 }

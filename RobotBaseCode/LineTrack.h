@@ -1,8 +1,5 @@
-#include <Pixy2.h>
-
 void track(void); //Speed control
 void track_setup(void); //pin set up
-void active_braking(void);
 
 float command1 = 0;//leftmotr speed rev/s
 float command2 = 0;//rightmotr speed rev/s
@@ -28,7 +25,6 @@ int sums[7];
 int readings[30][7];
 bool flag = 0, flag1 = 0, flag2 = 0, flag3 = 0, flag4 = 0, flag5 = 0, flag6 = 0, flag7 = 0, tree1 = 0, tree2 = 0;
 float current_position = (cur_pos[0] + cur_pos[1])/2;
-//Pixy2 pixy;
 
 void track_setup(void) //enabling line tracker sensors
 {
@@ -39,7 +35,6 @@ void track_setup(void) //enabling line tracker sensors
   pinMode(A7, INPUT); //left middle
   pinMode(A5, INPUT); //left
   pinMode(A6, INPUT); //out left
-  //pixy.init();
 }
 
 void track(void)
@@ -90,6 +85,8 @@ void track(void)
   }
   else if (current_position > 1.4 && tree1 == 0)
   {
+    digitalWrite(37) = 1;
+    digitalWrite(39) = 1;
     tree1 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed
@@ -97,10 +94,11 @@ void track(void)
     des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
     des_vel[1] = (command2/2)/14;//rightmotor speed
     low_level_control();//pid controller
-    for (int z = 1; z < 20000; z++);
   }
   else if (current_position > 2.03 && flag1 == 0)
   {
+    digitalWrite(37) = 1;
+    digitalWrite(39) = 1;
     flag1 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed
@@ -112,6 +110,8 @@ void track(void)
   }
   else if (current_position > 100 && flag2 == 0)
   {
+    digitalWrite(37) = 1;
+    digitalWrite(39) = 1;
     flag2 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed
@@ -123,6 +123,8 @@ void track(void)
   }
   else if (current_position > 4.24 && flag3 == 0)
   {
+    digitalWrite(37) = 1;
+    digitalWrite(39) = 1;
     flag3 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed
@@ -134,6 +136,8 @@ void track(void)
   }
   else if (current_position > 7.16 && tree2 == 0)
   {
+    digitalWrite(37) = 1;
+    digitalWrite(39) = 1;
     tree2 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed
@@ -145,6 +149,8 @@ void track(void)
   }
   else if (current_position > 8 && flag == 0) //8
   {
+    digitalWrite(37) = 1;
+    digitalWrite(39) = 1;
     flag = 1;
     command1 = -100;//leftmotor speed
     command2 = 100;//rightmotor speed
@@ -156,6 +162,8 @@ void track(void)
   }
   else if (current_position > 8.24 && flag4 == 0)
   {
+    digitalWrite(37) = 1;
+    digitalWrite(39) = 1;
     flag4 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed
@@ -167,6 +175,8 @@ void track(void)
   }
   else if (current_position > 8.83 && flag5 == 0)
   {
+    digitalWrite(37) = 1;
+    digitalWrite(39) = 1;
     flag5 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed
@@ -178,6 +188,8 @@ void track(void)
   }
   else if (current_position > 12.63 && flag6 == 0)
   {
+    digitalWrite(37) = 1;
+    digitalWrite(39) = 1;
     flag6 = 1;
     command1 = 0;//leftmotor speed
     command2 = 0;//rightmotor speed

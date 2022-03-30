@@ -166,13 +166,6 @@ void set_up_timer(void)
   TCCR1B |= (1 << WGM12); //CTC mode
   TCCR1B |= (1 << CS12); //256 prescaler
   TIMSK1 |= (1 << OCIE1A); //Enable timer compare interrupt
-//  TCCR5A = 0;
-//  TCCR5B = 0;
-//  TCNT5 = 0;
-//  OCR5A = 6250; //Used to compare the match registry
-//  TCCR5B |= (1 << WGM12); //CTC mode
-//  TCCR5B |= (1 << CS12); //256 prescaler
-//  TIMSK5 |= (1 << OCIE1A); //Enable timer compare interrupt
   interrupts();
 }
 
