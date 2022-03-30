@@ -1,6 +1,6 @@
 #include "Drivetrain.h"
 #include "LineTrack.h"
-#include "BeadCollectLaunch.h"
+//#include "BeadCollectLaunch.h"
 
 void setup()
 {
@@ -9,7 +9,7 @@ void setup()
   track_setup();
   motor_init();
   encoder_init();
-  armcat_init();
+  //armcat_init();
   Serial.begin(9600);
 }
 
@@ -36,7 +36,7 @@ void loop(void)
   //Serial.println(encoder1_val);
 }
 
-ISR(TIMER1_COMPA_vect)//interrupt timer that is activated ever 10ms
+ISR(TIMER1_COMPA_vect)//interrupt timer that is activated ever 10ms //should be timer 1
 {
   loop();
 }

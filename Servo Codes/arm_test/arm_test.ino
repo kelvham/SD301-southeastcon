@@ -55,6 +55,8 @@ void setup() {
   catapult.write(CATAPULT_DOWN);
   Serial.begin(9600);
   pixy.init();
+  pinMode(49, INPUT);
+  pinMode(47, OUTPUT);
 }
  
 void loop() {
@@ -66,6 +68,15 @@ void loop() {
   catapult.write(CATAPULT_DOWN);
 
   pixy.ccc.getBlocks();
+
+  if (digitalRead(49) == HIGH)
+  {
+    digitalWrite(47, HIGH);
+  }
+  else
+  {
+    digitalWrite(47, LOW);
+  }
 
   if (pixy.ccc.numBlocks)
   {

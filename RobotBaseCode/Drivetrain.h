@@ -16,10 +16,10 @@ void pwm_init(void)
 void motor_init(void)
 {
   pwm_init();
-  pinMode(50, OUTPUT); //Direction(I1) for motor 0/left motor
-  pinMode(51, OUTPUT); //Direction(I2) for motor 0
-  pinMode(52, OUTPUT); //Direction(I3) for motor 1/right motor
-  pinMode(53, OUTPUT); //Direction(I4) for motor 1
+  pinMode(50, OUTPUT); //Direction(I1) for motor 0/left motor//50
+  pinMode(51, OUTPUT); //Direction(I2) for motor 0//51
+  pinMode(52, OUTPUT); //Direction(I3) for motor 1/right motor//52
+  pinMode(53, OUTPUT); //Direction(I4) for motor 1//53
 }
 
 void motor_speed(int motor, int duty)
@@ -166,6 +166,13 @@ void set_up_timer(void)
   TCCR1B |= (1 << WGM12); //CTC mode
   TCCR1B |= (1 << CS12); //256 prescaler
   TIMSK1 |= (1 << OCIE1A); //Enable timer compare interrupt
+//  TCCR5A = 0;
+//  TCCR5B = 0;
+//  TCNT5 = 0;
+//  OCR5A = 6250; //Used to compare the match registry
+//  TCCR5B |= (1 << WGM12); //CTC mode
+//  TCCR5B |= (1 << CS12); //256 prescaler
+//  TIMSK5 |= (1 << OCIE1A); //Enable timer compare interrupt
   interrupts();
 }
 

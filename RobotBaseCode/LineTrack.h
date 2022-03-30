@@ -28,7 +28,7 @@ int sums[7];
 int readings[30][7];
 bool flag = 0, flag1 = 0, flag2 = 0, flag3 = 0, flag4 = 0, flag5 = 0, flag6 = 0, flag7 = 0, tree1 = 0, tree2 = 0;
 float current_position = (cur_pos[0] + cur_pos[1])/2;
-Pixy2 pixy;
+//Pixy2 pixy;
 
 void track_setup(void) //enabling line tracker sensors
 {
@@ -39,7 +39,7 @@ void track_setup(void) //enabling line tracker sensors
   pinMode(A7, INPUT); //left middle
   pinMode(A5, INPUT); //left
   pinMode(A6, INPUT); //out left
-  pixy.init();
+  //pixy.init();
 }
 
 void track(void)
@@ -83,16 +83,10 @@ void track(void)
   Serial.print(flag);
   Serial.print(" ");
   Serial.println(current_position);
-  if (current_position > 8 && flag == 0) //8
+  if(current_position < .15)
   {
-    flag = 1;
-    command1 = -100;//leftmotor speed
-    command2 = 100;//rightmotor speed
-    get_current_status();
-    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
-    des_vel[1] = (command2/2)/14;//rightmotor speed
-    low_level_control();//pid controller
-    for (int z = 1; z < 2000; z++);
+     command1 = 3;//*1.10;
+     command2 = 3;
   }
   else if (current_position > 1.4 && tree1 == 0)
   {
@@ -148,6 +142,17 @@ void track(void)
     des_vel[1] = (command2/2)/14;//rightmotor speed
     low_level_control();//pid controller
     for (int z = 1; z < 20000; z++);
+  }
+  else if (current_position > 8 && flag == 0) //8
+  {
+    flag = 1;
+    command1 = -100;//leftmotor speed
+    command2 = 100;//rightmotor speed
+    get_current_status();
+    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+    des_vel[1] = (command2/2)/14;//rightmotor speed
+    low_level_control();//pid controller
+    for (int z = 1; z < 2000; z++);
   }
   else if (current_position > 8.24 && flag4 == 0)
   {
@@ -231,11 +236,6 @@ void track(void)
         break;
       }
     }
-  else if(current_position < .15)
-  {
-     command1 = 3;//*1.10;
-     command2 = 3;
-  }
   else if(((Out_R < Out_L) && (Out_R < L) && (Out_R < Mid_L) && (Out_R < Mid) && (Out_R < Mid_R) && (Out_R < R))  || 
           ((Out_L < Out_R) && (Out_L < L) && (Out_L < Mid_L) && (Out_L < Mid) && (Out_L < Mid_R) && (Out_L < R)))
     {
