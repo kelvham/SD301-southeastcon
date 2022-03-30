@@ -24,19 +24,19 @@ int CATAPULT_DOWN = 170;
 int CATAPULT_UP = 40;
 
 int ROTATOR_CLOSE = 180;
-int ROTATOR_CATAPULT = 120;
+int ROTATOR_CATAPULT = 100;
  
 int HAND_CLOSE = 0;
 int HAND_OPEN = 90;
 
 int ELBOW_CLOSE = 180;
 int ELBOW_OPEN = 0;
-int ELBOW_CATAPULT = 135;
+int ELBOW_CATAPULT = 150;
 int ELBOW_TENSION = 150;
 
 int SHOULDER_CLOSE = 180;
-int SHOULDER_OPEN = 115;
-int SHOULDER_CATAPULT = 115;
+int SHOULDER_OPEN = 110;
+int SHOULDER_CATAPULT = 125;
 
 int HAND_HALFOPEN = (HAND_CLOSE+HAND_OPEN)/2;
 
@@ -121,10 +121,8 @@ void collect(void)
   delay(2000);
 
   rotator.write(ROTATOR_CLOSE);
-  delay(1000);
-  rotator.write(ROTATOR_CLOSE - 30);
   
-  delay(2000);
+  delay(5000);
 
   hand.write(HAND_CLOSE);
 
@@ -152,42 +150,42 @@ void collect(void)
 
   hand.write(HAND_OPEN);
 
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT + 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT - 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT + 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT - 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT + 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT - 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT + 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT - 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT + 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT - 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT + 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT - 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT + 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT - 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT + 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT - 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT + 10);
-  delay(100);
-  rotator.write(ROTATOR_CATAPULT - 10);
+  delay(3000);
+//  rotator.write(ROTATOR_CATAPULT + 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT - 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT + 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT - 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT + 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT - 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT + 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT - 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT + 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT - 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT + 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT - 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT + 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT - 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT + 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT - 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT + 10);
+//  delay(100);
+//  rotator.write(ROTATOR_CATAPULT - 10);
 
 
   //elbow.write(ELBOW_CLOSE-30);
