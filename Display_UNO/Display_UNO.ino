@@ -58,7 +58,7 @@ void setup(void) {
 
   // Fill screen black. Not a required step, this just shows that we're
   // successfully communicating with the screen.
-  tft.fillScreen(ILI9341_BLACK);
+  //tft.fillScreen(ILI9341_BLACK);
 
   Serial.print(F("Loading logos.bmp to screen..."));
   reader.drawBMP("/logos.bmp", tft, 0, 0);
