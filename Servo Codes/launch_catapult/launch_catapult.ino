@@ -70,40 +70,33 @@ void loop()
   elbow.detach();  // attaches the servo on pin 9 to the servo object
   shoulder.detach();  // attaches the servo on pin 9 to the servo object
   //catapult.detach();
-  if (digitalRead(37) == 1) //launch input
+  digitalWrite(33, HIGH);
+  if (digitalRead(37) == 1 && digitalRead(39) == 0) //check + launch input
   {
+    digitalWrite(33, LOW);
     pixy.ccc.getBlocks();
-    if (pixy.ccc.numBlocks)
+    if (!pixy.ccc.numBlocks)
     {
-        rotator.attach(23);
-  hand.attach(25);  // attaches the servo on pin 9 to the servo object
-  elbow.attach(27);  // attaches the servo on pin 9 to the servo object
-  shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
-  catapult.attach(31);
-      digitalWrite(33, HIGH);
+      rotator.attach(23);
+      hand.attach(25);  // attaches the servo on pin 9 to the servo object
+      elbow.attach(27);  // attaches the servo on pin 9 to the servo object
+      shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
+      catapult.attach(31);
       launch();
-      digitalWrite(33, LOW);
+      digitalWrite(33, HIGH);
     }
   }
-  else if (digitalRead(39) == 0) //collect input
+  else if (digitalRead(37) == 1 && digitalRead(39) == 1) //collect input
   {
-      rotator.attach(23);
-  hand.attach(25);  // attaches the servo on pin 9 to the servo object
-  elbow.attach(27);  // attaches the servo on pin 9 to the servo object
-  shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
-  catapult.attach(31);
-    digitalWrite(33, HIGH);
-    collect();
     digitalWrite(33, LOW);
+    rotator.attach(23);
+    hand.attach(25);  // attaches the servo on pin 9 to the servo object
+    elbow.attach(27);  // attaches the servo on pin 9 to the servo object
+    shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
+    catapult.attach(31);
+    collect();
+    digitalWrite(33, HIGH);
   }
-//  else
-//  {
-//    rotator.write(ROTATOR_CLOSE);
-//    hand.write(HAND_CLOSE);
-//    elbow.write(ELBOW_CLOSE);
-//    shoulder.write(SHOULDER_CLOSE);
-//    catapult.write(CATAPULT_DOWN);
-//  }
 }
 
 void collect(void)

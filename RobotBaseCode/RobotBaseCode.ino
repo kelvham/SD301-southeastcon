@@ -12,16 +12,20 @@ void setup()
   pinMode(33, INPUT); //input from top board
   pinMode(37, OUTPUT); //output to top board
   pinMode(39, OUTPUT); //output to top board
+  digitalWrite(37, LOW);
+  digitalWrite(39, LOW);
   Serial.begin(9600);
 }
 
 void loop(void) 
 {
-  while(1);
   interrupts();
-  while(digitalRead(33) == 1)
+  digitalWrite(37, LOW);
+  digitalWrite(39, LOW);
+  while(digitalRead(33) == 0) //stop condition from top
   {
     noInterrupts();
+    get_current_status();
     des_vel[0] = 0;//leftmotor speed
     des_vel[1] = 0;//rightmotor speed
     low_level_control();//pid controller
@@ -36,10 +40,12 @@ void loop(void)
       low_level_control();//pid controller
       return;
   }
-
-  des_vel[0] = command1/14;//leftmotor speed
-  des_vel[1] = command2/14;//rightmotor speed
-  low_level_control();//pid controller 
+  else
+  {
+    des_vel[0] = command1/14;//leftmotor speed
+    des_vel[1] = command2/14;//rightmotor speed
+    low_level_control();//pid controller 
+  }
 }
 
 ISR(TIMER1_COMPA_vect)//interrupt timer that is activated ever 10ms //should be timer 1
