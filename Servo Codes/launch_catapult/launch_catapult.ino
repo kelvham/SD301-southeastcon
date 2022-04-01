@@ -29,7 +29,7 @@ int HAND_OPEN = 90; //hand open position
 int ELBOW_CLOSE = 180; //elbow rest position
 int ELBOW_OPEN = 0; //elbow open (all the way to 0 to not strain motors)
 int ELBOW_CATAPULT = 150; //elbow catapult position
-int ELBOW_TENSION = 150; //elbow tensioner position
+int ELBOW_TENSION = 130; //elbow tensioner position
 
 int SHOULDER_CLOSE = 180; //shoulder rest position
 int SHOULDER_OPEN = 110; //shoulder open position (to grab beads)
