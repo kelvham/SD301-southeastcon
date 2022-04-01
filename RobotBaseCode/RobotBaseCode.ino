@@ -40,11 +40,6 @@ void loop(void)
     des_vel[1] = 0;
     low_level_control();//pid controller
     Serial.println("im stuck stepbro");
-//    noInterrupts();
-//    get_current_status();
-//    des_vel[0] = 0;//leftmotor speed
-//    des_vel[1] = 0;//rightmotor speed
-//    low_level_control();//pid controller
   }
   interrupts();
 //      get_current_status();
@@ -54,7 +49,7 @@ void loop(void)
   track();//line follower sensors
   get_current_status();
 
-  if (current_position > 15.5)
+  if (current_position > 23.31)
   {
       des_vel[0] = 0;//leftmotor speed
       des_vel[1] = 0;//rightmotor speed

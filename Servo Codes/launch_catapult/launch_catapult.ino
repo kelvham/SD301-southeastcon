@@ -84,8 +84,9 @@ void loop()
       catapult.attach(31);
       launch(); //launch beads
     }
+    digitalWrite(33, LOW); //tell bottom Arduino to drive
   }
-  else if (digitalRead(37) == 1 && digitalRead(39) == 1) //collect input
+  else if (digitalRead(37) == 0 && digitalRead(39) == 1) //collect input
   {
     digitalWrite(33, HIGH); //tell botton Arduino to stop
     //attach all servos
