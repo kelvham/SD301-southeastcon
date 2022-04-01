@@ -36,6 +36,8 @@ void loop(void)
     get_current_status();
     des_pos[0] = cur_pos[0];//leftmotor position
     des_pos[1] = cur_pos[1];//rightmotor position
+    des_vel[0] = 0;
+    des_vel[1] = 0;
     low_level_control();//pid controller
     Serial.println("im stuck stepbro");
 //    noInterrupts();
@@ -45,6 +47,10 @@ void loop(void)
 //    low_level_control();//pid controller
   }
   interrupts();
+//      get_current_status();
+//    des_pos[0] = cur_pos[0];//leftmotor position
+//    des_pos[1] = cur_pos[1];//rightmotor position
+//    low_level_control();//pid controller
   track();//line follower sensors
   get_current_status();
 

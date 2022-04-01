@@ -157,7 +157,7 @@ void collect(void)
   elbow.write(ELBOW_CLOSE);
   shoulder.write(SHOULDER_CLOSE);
 
-  delay(5000);
+  delay(1000);
 
   //****************************************
   //End Bead Grab Procedure
