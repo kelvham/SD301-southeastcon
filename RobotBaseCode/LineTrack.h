@@ -19,7 +19,7 @@ float WheelDis = 0.215; //in meters
 float wheelRad = 0.0575; //in meters
 int x = 45;
 int n = 0;
-int v = 1.5;
+int v = 1;
 int index = 0;
 int sums[7];
 int readings[30][7];
@@ -80,33 +80,23 @@ void track(void)
   Serial.println(current_position);
   if(current_position < .15) //initial launch out of start square
   {
-     command1 = 3;//*1.10;
-     command2 = 3;
+     command1 = 2;//*1.10;
+     command2 = 2;
   }
-  else if (current_position > 1.4 && tree1 == 0)
+  else if (current_position > 2.48 && tree1 == 0)
   {
     noInterrupts();
     tree1 = 1;
     digitalWrite(37, HIGH);
     digitalWrite(39, HIGH);
     get_current_status();
-    des_vel[0] = 0;//leftmotor speed
-    des_vel[1] = 0;//rightmotor speed
+    des_pos[0] = cur_pos[0];//leftmotor position
+    des_pos[1] = cur_pos[1];//rightmotor position
     low_level_control();//pid controller
+    //while(1);
+    //delay(10000);
     interrupts();
   }
-//  else if (current_position > 1.4 && tree1 == 0)
-//  {
-//    digitalWrite(37, HIGH);
-//    digitalWrite(39, HIGH);
-//    tree1 = 1;
-//    command1 = 0;//leftmotor speed
-//    command2 = 0;//rightmotor speed
-//    get_current_status();
-//    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
-//    des_vel[1] = (command2/2)/14;//rightmotor speed
-//    low_level_control();//pid controller
-//  }
 //  else if (current_position > 2.03 && flag1 == 0)
 //  {
 //    digitalWrite(37, HIGH);
@@ -159,19 +149,19 @@ void track(void)
 //    low_level_control();//pid controller
 //    for (int z = 1; z < 20000; z++);
 //  }
-  else if (current_position > 13 && flag == 0) //8
-  {
-    digitalWrite(37, HIGH);
-    digitalWrite(39, HIGH);
-    flag = 1;
-    command1 = -100;//leftmotor speed
-    command2 = 100;//rightmotor speed
-    get_current_status();
-    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
-    des_vel[1] = (command2/2)/14;//rightmotor speed
-    low_level_control();//pid controller
-    for (int z = 1; z < 4000; z++);
-  }
+//  else if (current_position > 13 && flag == 0) //8
+//  {
+//    digitalWrite(37, HIGH);
+//    digitalWrite(39, HIGH);
+//    flag = 1;
+//    command1 = -100;//leftmotor speed
+//    command2 = 100;//rightmotor speed
+//    get_current_status();
+//    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
+//    des_vel[1] = (command2/2)/14;//rightmotor speed
+//    low_level_control();//pid controller
+//    for (int z = 1; z < 4000; z++);
+//  }
 //  else if (current_position > 8.24 && flag4 == 0)
 //  {
 //    digitalWrite(37, HIGH);

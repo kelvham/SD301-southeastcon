@@ -78,9 +78,9 @@ void loop()
     {
       //attach all servos
       rotator.attach(23);
-      hand.attach(25);  // attaches the servo on pin 9 to the servo object
-      elbow.attach(27);  // attaches the servo on pin 9 to the servo object
-      shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
+      hand.attach(25);
+      elbow.attach(27);
+      shoulder.attach(29);
       catapult.attach(31);
       launch(); //launch beads
     }
@@ -90,11 +90,12 @@ void loop()
     digitalWrite(33, HIGH); //tell botton Arduino to stop
     //attach all servos
     rotator.attach(23);
-    hand.attach(25);  // attaches the servo on pin 9 to the servo object
-    elbow.attach(27);  // attaches the servo on pin 9 to the servo object
-    shoulder.attach(29);  // attaches the servo on pin 9 to the servo object
+    hand.attach(25);
+    elbow.attach(27);
+    shoulder.attach(29);
     catapult.attach(31);
     collect(); //collect beads from trees
+    digitalWrite(33, LOW); //tell bottom Arduino to drive
   }
 }
 
@@ -105,7 +106,7 @@ void collect(void)
   //**************************
 
   delay(1000);
-xs
+
   elbow.write(ELBOW_OPEN);
   shoulder.write(SHOULDER_OPEN);
   hand.write(HAND_OPEN);
