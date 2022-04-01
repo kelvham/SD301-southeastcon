@@ -1,3 +1,11 @@
+//FAMU-FSU College of Engineering
+//ECE
+//Senior Design 301
+//IEEE Southeast Con Hardware Competition
+//Code Authors:
+//Kelvin Hamilton
+//Raymond Martinez
+
 //bottom board code
 
 #include "Drivetrain.h"
@@ -22,7 +30,7 @@ void loop(void)
   interrupts();
   digitalWrite(37, LOW);
   digitalWrite(39, LOW);
-  while(digitalRead(33) == 0) //stop condition from top
+  while(digitalRead(33) == 1) //stop condition from top
   {
     noInterrupts();
     get_current_status();

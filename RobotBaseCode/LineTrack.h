@@ -78,7 +78,7 @@ void track(void)
 //  Serial.print(flag);
 //  Serial.print(" ");
   Serial.println(current_position);
-  if(current_position < .15)
+  if(current_position < .15) //initial launch out of start square
   {
      command1 = 3;//*1.10;
      command2 = 3;
