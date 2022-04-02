@@ -21,7 +21,7 @@ int CATAPULT_DOWN = 170; //catapult rest position
 int CATAPULT_UP = 40; ///catapult launch position
 
 int ROTATOR_CLOSE = 180; //arm rotator rest position
-int ROTATOR_CATAPULT = 135; //arm rotator catapult position (dump beads and tension catapult)
+int ROTATOR_CATAPULT = 125; //arm rotator catapult position (dump beads and tension catapult)
 int ROTATOR_DROPOFF = 95; //arm rotator positionnto drop off beads
  
 int HAND_CLOSE = 10; //hand close position
@@ -72,7 +72,7 @@ void loop()
   //delay(10);
     
   digitalWrite(33, LOW); //tell bottom Arduino to drive
-  if (digitalRead(37) == 1 && digitalRead(39) == 0) //check + launch input
+  if (digitalRead(37) == 0 && digitalRead(39) == 0) //check + launch input
   {
     digitalWrite(33, HIGH); //tell botton Arduino to stop
     pixy.ccc.getBlocks(); //sense for cup
@@ -170,7 +170,7 @@ void launch(void)
   //Start launch procedure
   //****************************************
   rotator.write(ROTATOR_CATAPULT);  
-  delay(1000);
+  delay(2000);
   catapult.write(CATAPULT_UP);
   delay(3000);
   //return arm to closed position
@@ -178,6 +178,8 @@ void launch(void)
   delay(5000);
   //return catapult to closed position
   catapult.write(CATAPULT_DOWN);
+  //
+  delay(2000);
   //****************************************
   //End launch procedure
   //****************************************

@@ -108,8 +108,8 @@ void encoder_init(void)
 {
   pinMode(2, INPUT_PULLUP); //Encoder 0 CHA Left MOTOR
   pinMode(3, INPUT_PULLUP); //Encoder 0 CHB
-  pinMode(18, INPUT_PULLUP); //Encoder 1 CHA Right MOTOR
-  pinMode(19, INPUT_PULLUP); //Encoder 1 CHB
+  pinMode(19, INPUT_PULLUP); //Encoder 1 CHA Right MOTOR
+  pinMode(18, INPUT_PULLUP); //Encoder 1 CHB
   attachInterrupt(digitalPinToInterrupt(2), Enc0, RISING);
   attachInterrupt(digitalPinToInterrupt(18), Enc1, RISING);
 }

@@ -41,10 +41,6 @@ void loop(void)
     low_level_control();//pid controller
   }
   interrupts();
-//      get_current_status();
-//    des_pos[0] = cur_pos[0];//leftmotor position
-//    des_pos[1] = cur_pos[1];//rightmotor position
-//    low_level_control();//pid controller
   track();//line follower sensors
   get_current_status();
 
@@ -61,8 +57,7 @@ void loop(void)
     des_vel[1] = command2/14;//rightmotor speed
     low_level_control();//pid controller 
   }
-  Serial.println(command1);
-  Serial.println(command2);
+  Serial.println(current_position);
 }
 
 ISR(TIMER1_COMPA_vect)//interrupt timer that is activated ever 10ms //should be timer 1

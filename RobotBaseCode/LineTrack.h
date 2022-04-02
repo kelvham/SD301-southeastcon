@@ -80,8 +80,8 @@ void track(void)
   Serial.println(current_position);
   if(current_position < .15) //initial launch out of start square
   {
-     command1 = 1;//2
-     command2 = 1;//2
+     command1 = 2;//1
+     command2 = 2;//1
   }
   else if (current_position > 2.48 && tree1 == 0)
   {
