@@ -1,42 +1,108 @@
-#include <Stepper.h>
+//FAMU-FSU College of Engineering
+//ECE
+//Senior Design 301
+//IEEE Southeast Con Hardware Competition
+//Code Author:
+//Kelvin Hamilton
 
-const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
-// for your motor
+//top board code
+ 
+#include <Servo.h>
+#include <Pixy2.h>
 
-// initialize the stepper library on pins 8 through 11:
-Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
+Pixy2 pixy; 
+Servo hand;
+Servo elbow;
+Servo shoulder;
+Servo rotator;
+Servo catapult;
 
-void setup(void) {
-    // set the speed at 60 rpm:
-myStepper.setSpeed(60);
-  // initialize the serial port:
-Serial.begin(9600);
+int CATAPULT_DOWN = 170; //catapult rest position
+int CATAPULT_UP = 40; ///catapult launch position
 
-      // step one revolution in the other direction:
-Serial.println("counterclockwise");
-myStepper.step(stepsPerRevolution/4);
+int ROTATOR_CLOSE = 180; //arm rotator rest position
+int ROTATOR_CATAPULT = 135; //arm rotator catapult position (dump beads and tension catapult)
+ 
+int HAND_CLOSE = 0; //hand close position
+int HAND_OPEN = 90; //hand open position
 
-digitalWrite (8,LOW);
-digitalWrite (9,LOW);
-digitalWrite (10,LOW);
-digitalWrite (11,LOW);
+int ELBOW_CLOSE = 180; //elbow rest position
+int ELBOW_OPEN = 0; //elbow open (all the way to 0 to not strain motors)
+int ELBOW_CATAPULT = 150; //elbow catapult position
+int ELBOW_TENSION = 130; //elbow tensioner position
 
-delay(2000); // Pause 2 seconds before moving on to loop()
-       // step one revolution in the other direction:
+int SHOULDER_CLOSE = 180; //shoulder rest position
+int SHOULDER_OPEN = 110; //shoulder open position (to grab beads)
+int SHOULDER_CATAPULT = 125; //sboulder catapult position (to dump beads and tension catapult)
 
-digitalWrite (8,HIGH);
-digitalWrite (9,HIGH);
-digitalWrite (10,HIGH);
-digitalWrite (11,HIGH);
-Serial.println("clockwise");
-myStepper.step(-stepsPerRevolution/4);
+int HAND_HALFOPEN = (HAND_CLOSE+HAND_OPEN)/2; //hand half open (used to not send so much current at once)
+int ELBOW_HALFOPEN = (ELBOW_CLOSE+ELBOW_OPEN)/2; //elbow half open (used to not send so much current at once)
+int SHOULDER_HALFOPEN = (SHOULDER_CLOSE+SHOULDER_OPEN)/2; //shoulder half open (used to not send so much current at once)
+ 
+void setup() {
+  //set all servos to close position
+  rotator.write(ROTATOR_CLOSE);
+  hand.write(HAND_CLOSE);
+  elbow.write(ELBOW_CLOSE);
+  shoulder.write(SHOULDER_CLOSE);
+  catapult.write(CATAPULT_DOWN);
+  
+  //use baud rate of 9600
+  Serial.begin(9600);
 
-digitalWrite (8,LOW);
-digitalWrite (9,LOW);
-digitalWrite (10,LOW);
-digitalWrite (11,LOW);
+  //initialize pixycam
+  pixy.init();
+
+  //initialize I/O pins to other board for communication
+  pinMode(33, OUTPUT); //output to bottom board
+  pinMode(37, INPUT); //input from bottom board
+  pinMode(39, INPUT); //input from bottom board
+}
+ 
+void loop() 
+{
+  //detach all servos to conserve power
+  //catapult.detach(); //this was breaking the program
+  //attach all servos
+  rotator.attach(23);
+  catapult.attach(31);
+  launch(); //collect beads from trees
+  while(1);
 }
 
-void loop() {
- //exit(1);
+void launch(void)
+{
+  //****************************************
+  //Start launch procedure
+  //****************************************
+  rotator.write(ROTATOR_CATAPULT);
+     
+  delay(1000);
+
+  rotator.detach();
+
+  delay(500);
+  
+  catapult.write(CATAPULT_UP);
+  
+  delay(3000);
+
+  rotator.attach(23);
+
+  delay(500);
+
+  //return arm to closed position
+  rotator.write(ROTATOR_CLOSE);
+  hand.write(HAND_CLOSE);
+  elbow.write(ELBOW_CLOSE);
+  shoulder.write(SHOULDER_CLOSE);
+  
+  delay(5000);
+
+  //return catapult to closed position
+  catapult.write(CATAPULT_DOWN);
+
+  //****************************************
+  //End launch procedure
+  //****************************************
 }

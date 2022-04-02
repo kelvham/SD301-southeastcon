@@ -21,19 +21,20 @@ int CATAPULT_DOWN = 170; //catapult rest position
 int CATAPULT_UP = 40; ///catapult launch position
 
 int ROTATOR_CLOSE = 180; //arm rotator rest position
-int ROTATOR_CATAPULT = 100; //arm rotator catapult position (dump beads and tension catapult)
+int ROTATOR_CATAPULT = 135; //arm rotator catapult position (dump beads and tension catapult)
+int ROTATOR_DROPOFF = 95; //arm rotator positionnto drop off beads
  
 int HAND_CLOSE = 0; //hand close position
 int HAND_OPEN = 90; //hand open position
 
 int ELBOW_CLOSE = 180; //elbow rest position
 int ELBOW_OPEN = 0; //elbow open (all the way to 0 to not strain motors)
-int ELBOW_CATAPULT = 150; //elbow catapult position
+int ELBOW_CATAPULT = 140; //elbow catapult position
 int ELBOW_TENSION = 130; //elbow tensioner position
 
 int SHOULDER_CLOSE = 180; //shoulder rest position
 int SHOULDER_OPEN = 110; //shoulder open position (to grab beads)
-int SHOULDER_CATAPULT = 125; //sboulder catapult position (to dump beads and tension catapult)
+int SHOULDER_CATAPULT = 145; //sboulder catapult position (to dump beads and tension catapult)
 
 int HAND_HALFOPEN = (HAND_CLOSE+HAND_OPEN)/2; //hand half open (used to not send so much current at once)
 int ELBOW_HALFOPEN = (ELBOW_CLOSE+ELBOW_OPEN)/2; //elbow half open (used to not send so much current at once)
@@ -46,6 +47,7 @@ void setup() {
   elbow.write(ELBOW_CLOSE);
   shoulder.write(SHOULDER_CLOSE);
   catapult.write(CATAPULT_DOWN);
+
   
   //use baud rate of 9600
   Serial.begin(9600);
@@ -78,17 +80,14 @@ void loop()
     {
       //attach all servos
       rotator.attach(23);
-      hand.attach(25);
-      elbow.attach(27);
-      shoulder.attach(29);
       catapult.attach(31);
       launch(); //launch beads
     }
     digitalWrite(33, LOW); //tell bottom Arduino to drive
   }
-  else if (digitalRead(37) == 0 && digitalRead(39) == 1) //collect input
+  else if (digitalRead(37) == 0 && digitalRead(39) == 0) //collect input //39==1
   {
-    digitalWrite(33, HIGH); //tell botton Arduino to stop
+    digitalWrite(33, HIGH); //tell bottom Arduino to stop
     //attach all servos
     rotator.attach(23);
     hand.attach(25);
@@ -108,8 +107,11 @@ void collect(void)
 
   delay(1000);
 
-  elbow.write(ELBOW_OPEN);
   shoulder.write(SHOULDER_OPEN);
+
+  delay(500);
+  
+  elbow.write(ELBOW_OPEN);
   hand.write(HAND_OPEN);
 
   delay(2000);
@@ -122,19 +124,21 @@ void collect(void)
 
   delay(5000);
 
+  hand.detach();
   elbow.write(ELBOW_CATAPULT);
 
-  delay(500);
+//  delay(500);
+//
+//  hand.write(HAND_CLOSE);
 
-  hand.write(HAND_CLOSE);
+  delay(3000);
 
-  delay(500);
-
+  hand.detach();
   shoulder.write(SHOULDER_CLOSE);
 
   delay(1000);
 
-  rotator.write(ROTATOR_CATAPULT);
+  rotator.write(ROTATOR_DROPOFF);
 
   delay(1000);
 
@@ -142,6 +146,7 @@ void collect(void)
 
   delay(1000);
 
+  hand.attach(25);
   hand.write(HAND_OPEN);
 
   delay(3000);
@@ -170,28 +175,15 @@ void launch(void)
   //****************************************
   //Start launch procedure
   //****************************************
-  shoulder.write(SHOULDER_CATAPULT);
-  elbow.write(ELBOW_TENSION);
-  rotator.write(ROTATOR_CATAPULT);
-  hand.write(HAND_CLOSE);
-     
+  rotator.write(ROTATOR_CATAPULT);  
   delay(1000);
-  
   catapult.write(CATAPULT_UP);
-  
   delay(3000);
-
   //return arm to closed position
   rotator.write(ROTATOR_CLOSE);
-  hand.write(HAND_CLOSE);
-  elbow.write(ELBOW_CLOSE);
-  shoulder.write(SHOULDER_CLOSE);
-  
   delay(5000);
-
   //return catapult to closed position
   catapult.write(CATAPULT_DOWN);
-
   //****************************************
   //End launch procedure
   //****************************************

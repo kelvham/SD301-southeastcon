@@ -19,7 +19,7 @@ float WheelDis = 0.215; //in meters
 float wheelRad = 0.0575; //in meters
 int x = 45;
 int n = 0;
-int v = 1;
+int v = 1; //1
 int index = 0;
 int sums[7];
 int readings[30][7];
@@ -80,8 +80,8 @@ void track(void)
   Serial.println(current_position);
   if(current_position < .15) //initial launch out of start square
   {
-     command1 = 2;//*1.10;
-     command2 = 2;
+     command1 = 1;//2
+     command2 = 1;//2
   }
   else if (current_position > 2.48 && tree1 == 0)
   {
