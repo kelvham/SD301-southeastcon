@@ -39,7 +39,6 @@ void loop(void)
     des_vel[0] = 0;
     des_vel[1] = 0;
     low_level_control();//pid controller
-    Serial.println("im stuck stepbro");
   }
   interrupts();
 //      get_current_status();
@@ -62,6 +61,8 @@ void loop(void)
     des_vel[1] = command2/14;//rightmotor speed
     low_level_control();//pid controller 
   }
+  Serial.println(command1);
+  Serial.println(command2);
 }
 
 ISR(TIMER1_COMPA_vect)//interrupt timer that is activated ever 10ms //should be timer 1

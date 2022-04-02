@@ -24,7 +24,7 @@ int ROTATOR_CLOSE = 180; //arm rotator rest position
 int ROTATOR_CATAPULT = 135; //arm rotator catapult position (dump beads and tension catapult)
 int ROTATOR_DROPOFF = 95; //arm rotator positionnto drop off beads
  
-int HAND_CLOSE = 0; //hand close position
+int HAND_CLOSE = 10; //hand close position
 int HAND_OPEN = 90; //hand open position
 
 int ELBOW_CLOSE = 180; //elbow rest position
@@ -68,7 +68,7 @@ void loop()
   hand.detach();
   elbow.detach();
   shoulder.detach();
-  //catapult.detach(); //this was breaking the program
+  catapult.detach(); //this was breaking the program
   //delay(10);
     
   digitalWrite(33, LOW); //tell bottom Arduino to drive
@@ -85,7 +85,7 @@ void loop()
     }
     digitalWrite(33, LOW); //tell bottom Arduino to drive
   }
-  else if (digitalRead(37) == 0 && digitalRead(39) == 0) //collect input //39==1
+  else if (digitalRead(37) == 0 && digitalRead(39) == 1) //collect input //39==1
   {
     digitalWrite(33, HIGH); //tell bottom Arduino to stop
     //attach all servos
@@ -93,7 +93,6 @@ void loop()
     hand.attach(25);
     elbow.attach(27);
     shoulder.attach(29);
-    catapult.attach(31);
     collect(); //collect beads from trees
     digitalWrite(33, LOW); //tell bottom Arduino to drive
   }
@@ -127,13 +126,8 @@ void collect(void)
   hand.detach();
   elbow.write(ELBOW_CATAPULT);
 
-//  delay(500);
-//
-//  hand.write(HAND_CLOSE);
-
   delay(3000);
 
-  hand.detach();
   shoulder.write(SHOULDER_CLOSE);
 
   delay(1000);
