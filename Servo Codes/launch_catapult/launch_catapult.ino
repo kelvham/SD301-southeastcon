@@ -71,7 +71,7 @@ void loop()
   catapult.detach(); //this was breaking the program
     
   digitalWrite(33, LOW); //tell bottom Arduino to drive
-  if (digitalRead(37) == 1 && digitalRead(39) == 0) //check + launch input
+  if (digitalRead(37) == 0 && digitalRead(39) == 0) //check + launch input //37==1
   {
     digitalWrite(33, HIGH); //tell botton Arduino to stop
  pixy.ccc.getBlocks(); //sense for cup
@@ -80,6 +80,8 @@ void loop()
       //attach all servos
       rotator.attach(23);
       catapult.attach(31);
+      elbow.attach(27);//temp
+      shoulder.attach(29);//temp
       launch(); //launch beads
     }
     digitalWrite(33, LOW); //tell bottom Arduino to drive
@@ -171,13 +173,19 @@ void launch(void)
   //****************************************
   //Start launch procedure
   //****************************************
-  rotator.write(ROTATOR_CATAPULT);  
+  elbow.write(ELBOW_TENSION);
+  delay(1000);
+  shoulder.write(SHOULDER_CATAPULT);
+  delay(1000);//end test
+  rotator.write(ROTATOR_CATAPULT);
+  delay(1000);
+  elbow.write(ELBOW_CLOSE);  
   delay(2000);
   catapult.write(CATAPULT_UP);
   delay(3000);
   //return arm to closed position
   rotator.write(ROTATOR_CLOSE);
-  delay(5000);
+  delay(2000);
   //return catapult to closed position
   catapult.write(CATAPULT_DOWN);
   //

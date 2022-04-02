@@ -115,7 +115,7 @@ void track(void)
     low_level_control();//pid controller
     interrupts();
   }
-  else if (current_position > 11.15 && tree2 == 0)
+  else if (current_position > 11.35 && tree2 == 0)
   {
     noInterrupts();
     tree2 = 1;
