@@ -30,7 +30,7 @@ int HAND_OPEN = 90; //hand open position
 int ELBOW_CLOSE = 180; //elbow rest position
 int ELBOW_OPEN = 0; //elbow open (all the way to 0 to not strain motors)
 int ELBOW_CATAPULT = 140; //elbow catapult position
-int ELBOW_TENSION = 130; //elbow tensioner position
+int ELBOW_TENSION = 130; //elbow tensioner position 130
 
 int SHOULDER_CLOSE = 180; //shoulder rest position
 int SHOULDER_OPEN = 110; //shoulder open position (to grab beads)
@@ -71,10 +71,11 @@ void loop()
   catapult.detach(); //this was breaking the program
     
   digitalWrite(33, LOW); //tell bottom Arduino to drive
-  if (digitalRead(37) == 0 && digitalRead(39) == 0) //check + launch input //37==1
+  if (digitalRead(37) == 1 && digitalRead(39) == 0) //check + launch input //37==1
   {
+    Serial.println("shit");
     digitalWrite(33, HIGH); //tell botton Arduino to stop
- pixy.ccc.getBlocks(); //sense for cup
+    pixy.ccc.getBlocks(); //sense for cup
     if (!pixy.ccc.numBlocks) //if no cup found
     {
       //attach all servos
@@ -86,7 +87,7 @@ void loop()
     }
     digitalWrite(33, LOW); //tell bottom Arduino to drive
   }
-  else if (digitalRead(37) == 0 && digitalRead(39) == 1) //collect input //39==1
+  else if (digitalRead(37) ==  && digitalRead(39) == 1) //collect input //39==1
   {
     digitalWrite(33, HIGH); //tell bottom Arduino to stop
     //attach all servos
@@ -104,65 +105,38 @@ void collect(void)
   //**************************
   //Start Bead Grab Procedure
   //**************************
-
   delay(1000);
-
   shoulder.write(SHOULDER_OPEN);
-
   delay(500);
-
   hand.write(HAND_OPEN);
-
   delay(500);
-  
   elbow.write(ELBOW_OPEN);
-
   delay(2000);
-
   rotator.write(ROTATOR_CLOSE);
-  
   delay(5000);
-
   hand.write(HAND_CLOSE);
-
   delay(5000);
-
   hand.detach();
   elbow.write(ELBOW_CATAPULT);
-
   delay(3000);
-
   shoulder.write(SHOULDER_CLOSE);
-
   delay(1000);
-
   rotator.write(ROTATOR_DROPOFF);
-
   delay(1000);
-
   shoulder.write(SHOULDER_CATAPULT);
-
   delay(1000);
-
   hand.attach(25);
   hand.write(HAND_OPEN);
-
   delay(3000);
-
   shoulder.write(SHOULDER_CLOSE-30);
-  
   delay(500);
-  
-  rotator.write(ROTATOR_CLOSE+30);
-
+  rotator.write(ROTATOR_CLOSE-30);
   //return arm to closed position
   rotator.write(ROTATOR_CLOSE);
   hand.write(HAND_CLOSE);
   elbow.write(ELBOW_CLOSE);
   shoulder.write(SHOULDER_CLOSE);
-
   delay(1000);
-
   //****************************************
   //End Bead Grab Procedure
   //****************************************
@@ -188,8 +162,19 @@ void launch(void)
   delay(2000);
   //return catapult to closed position
   catapult.write(CATAPULT_DOWN);
-  //
   delay(2000);
+  catapult.write(CATAPULT_DOWN - 50);
+  delay(100);
+  catapult.write(CATAPULT_DOWN);
+  delay(100);
+  catapult.write(CATAPULT_DOWN - 50);
+  delay(100);
+  catapult.write(CATAPULT_DOWN);
+  delay(100);
+  catapult.write(CATAPULT_DOWN - 50);
+  delay(100);
+  catapult.write(CATAPULT_DOWN);
+  delay(100);
   //****************************************
   //End launch procedure
   //****************************************
