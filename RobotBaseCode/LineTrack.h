@@ -61,22 +61,6 @@ void track(void)
   R = data[5];
   Out_R = data[6];
   
-//  Serial.print(Out_L);
-//  Serial.print(" ");
-//  Serial.print(L);
-//  Serial.print(" ");
-//  Serial.print(Mid_L);
-//  Serial.print(" ");
-//  Serial.print(Mid);
-//  Serial.print(" ");
-//  Serial.print(Mid_R);
-//  Serial.print(" ");
-//  Serial.print(R);
-//  Serial.print(" ");
-//  Serial.print(Out_R);
-//  Serial.print(" ");
-//  Serial.print(flag);
-//  Serial.print(" ");
   Serial.println(current_position);
   if(current_position < .15) //initial launch out of start square
   {
@@ -143,16 +127,20 @@ void track(void)
     low_level_control();//pid controller
     interrupts();
   }
-  else if (current_position > 12 && flag == 0) //turn around
+  else if (current_position > 12 && flag == 0) //turn around //12
   {
+    noInterrupts();
     flag = 1;
-    command1 = -25;//leftmotor speed
-    command2 = 25;//rightmotor speed
+    command1 = -50;//leftmotor speed
+    command2 = 50;//rightmotor speed
     get_current_status();
-    des_vel[0] = (command1*1.2/2)/14;//leftmotor speed
-    des_vel[1] = (command2/2)/14;//rightmotor speed
+    des_vel[0] = command1/14;//leftmotor speed
+    des_vel[1] = command2/14;//rightmotor speed
+    des_pos[0] = cur_pos[0] + 1;
+    des_pos[1] = cur_pos[1] - 1;
     low_level_control();//pid controller
     for (int z = 1; z < 4000; z++);
+    interrupts();
   }
   else if (current_position > 5.95 && flag4 == 0)
   {

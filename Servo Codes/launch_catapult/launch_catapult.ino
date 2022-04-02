@@ -8,9 +8,9 @@
 //top board code
  
 #include <Servo.h>
-//#include <Pixy2.h>
+#include <Pixy2.h>
 
-//Pixy2 pixy; 
+Pixy2 pixy; 
 Servo hand;
 Servo elbow;
 Servo shoulder;
@@ -53,7 +53,7 @@ void setup() {
   Serial.begin(9600);
 
   //initialize pixycam
- // pixy.init();
+  pixy.init();
 
   //initialize I/O pins to other board for communication
   pinMode(33, OUTPUT); //output to bottom board
@@ -69,20 +69,19 @@ void loop()
   elbow.detach();
   shoulder.detach();
   catapult.detach(); //this was breaking the program
-  //delay(10);
     
   digitalWrite(33, LOW); //tell bottom Arduino to drive
   if (digitalRead(37) == 1 && digitalRead(39) == 0) //check + launch input
   {
     digitalWrite(33, HIGH); //tell botton Arduino to stop
-// pixy.ccc.getBlocks(); //sense for cup
-   // if (!pixy.ccc.numBlocks) //if no cup found
-    //{
+ pixy.ccc.getBlocks(); //sense for cup
+    if (!pixy.ccc.numBlocks) //if no cup found
+    {
       //attach all servos
       rotator.attach(23);
       catapult.attach(31);
       launch(); //launch beads
-   // }
+    }
     digitalWrite(33, LOW); //tell bottom Arduino to drive
   }
   else if (digitalRead(37) == 0 && digitalRead(39) == 1) //collect input //39==1
