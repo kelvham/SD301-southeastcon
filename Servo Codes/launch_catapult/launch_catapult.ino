@@ -39,6 +39,8 @@ int SHOULDER_CATAPULT = 145; //sboulder catapult position (to dump beads and ten
 int HAND_HALFOPEN = (HAND_CLOSE+HAND_OPEN)/2; //hand half open (used to not send so much current at once)
 int ELBOW_HALFOPEN = (ELBOW_CLOSE+ELBOW_OPEN)/2; //elbow half open (used to not send so much current at once)
 int SHOULDER_HALFOPEN = (SHOULDER_CLOSE+SHOULDER_OPEN)/2; //shoulder half open (used to not send so much current at once)
+
+bool loaded = 0; //bool to store if beads have been collected
  
 void setup() {
   //set all servos to close position
@@ -71,9 +73,8 @@ void loop()
   catapult.detach(); //this was breaking the program
     
   digitalWrite(33, LOW); //tell bottom Arduino to drive
-  if (digitalRead(37) == 1 && digitalRead(39) == 0) //check + launch input //37==1
+  if (digitalRead(37) == 1 && digitalRead(39) == 0 && loaded == 1) //check + launch input //37==1
   {
-    Serial.println("shit");
     digitalWrite(33, HIGH); //tell botton Arduino to stop
     pixy.ccc.getBlocks(); //sense for cup
     if (!pixy.ccc.numBlocks) //if no cup found
@@ -86,8 +87,9 @@ void loop()
       launch(); //launch beads
     }
     digitalWrite(33, LOW); //tell bottom Arduino to drive
+    loaded = 0;
   }
-  else if (digitalRead(37) ==  && digitalRead(39) == 1) //collect input //39==1
+  else if (digitalRead(37) ==  0 && digitalRead(39) == 1) //collect input //39==1
   {
     digitalWrite(33, HIGH); //tell bottom Arduino to stop
     //attach all servos
@@ -97,6 +99,7 @@ void loop()
     shoulder.attach(29);
     collect(); //collect beads from trees
     digitalWrite(33, LOW); //tell bottom Arduino to drive
+    loaded = 1;
   }
 }
 

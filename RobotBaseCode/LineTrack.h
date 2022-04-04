@@ -67,36 +67,12 @@ void track(void)
      command1 = 2;//1
      command2 = 2;//1
   }
-  else if (current_position > 100 && flag1 == 0)
-  {
-    noInterrupts();
-    flag1 = 1;
-    digitalWrite(37, HIGH);
-    digitalWrite(39, LOW);
-    get_current_status();
-    des_pos[0] = cur_pos[0];//leftmotor position
-    des_pos[1] = cur_pos[1];//rightmotor position
-    low_level_control();//pid controller
-    interrupts();
-  }
-  else if (current_position > 2.3 && tree1 == 0)
+  else if (current_position > 2.4 && tree1 == 0)
   {
     noInterrupts();
     tree1 = 1;
     digitalWrite(37, LOW);
     digitalWrite(39, HIGH);
-    get_current_status();
-    des_pos[0] = cur_pos[0];//leftmotor position
-    des_pos[1] = cur_pos[1];//rightmotor position
-    low_level_control();//pid controller
-    interrupts();
-  }
-  else if (current_position > 100 && flag2 == 0)
-  {
-    noInterrupts();
-    flag2 = 1;
-    digitalWrite(37, HIGH);
-    digitalWrite(39, LOW);
     get_current_status();
     des_pos[0] = cur_pos[0];//leftmotor position
     des_pos[1] = cur_pos[1];//rightmotor position
