@@ -85,9 +85,9 @@ void loop()
       elbow.attach(27);//temp
       shoulder.attach(29);//temp
       launch(); //launch beads
+      loaded = 0;
     }
     digitalWrite(33, LOW); //tell bottom Arduino to drive
-    loaded = 0;
   }
   else if (digitalRead(37) ==  0 && digitalRead(39) == 1) //collect input //39==1
   {
