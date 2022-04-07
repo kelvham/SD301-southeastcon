@@ -17,7 +17,7 @@ float LookAhead_Dis[3] = {0.1513, 0.1552, 0.1616}; //[outside L/R sens, L/R sens
 float LookAhead_Ycomp = 0.15; //[outside L/R sens, L/R sens] in meters
 float WheelDis = 0.215; //in meters
 float wheelRad = 0.0575; //in meters
-int x = 45;
+int x = 100; //Official Board: 45 Practice Board: 100
 int n = 0;
 int v = 1; //1
 int index = 0;
@@ -60,8 +60,23 @@ void track(void)
   Mid_R = data[4];
   R = data[5];
   Out_R = data[6];
+
+  Serial.println(Out_L);
+  Serial.print(" ");
+  Serial.print(L);
+  Serial.print(" ");
+  Serial.print(Mid_L);
+  Serial.print(" ");
+  Serial.print(Mid);
+  Serial.print(" ");
+  Serial.print(Mid_R);
+  Serial.print(" ");
+  Serial.print(R);
+  Serial.print(" ");
+  Serial.print(Out_R);
+  Serial.print(" ");
   
-  Serial.println(current_position);
+  //Serial.println(current_position);
   if(current_position < .15) //initial launch out of start square
   {
      command1 = 2;//1
