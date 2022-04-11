@@ -28,6 +28,7 @@ void setup()
 void loop(void) 
 {
   interrupts();
+  //while(1);
   digitalWrite(37, LOW);
   digitalWrite(39, LOW);
   while(digitalRead(33) == 1) //stop condition from top
