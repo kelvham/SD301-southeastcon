@@ -28,13 +28,13 @@ float current_position = (cur_pos[0] + cur_pos[1])/2;
 
 void track_setup(void) //enabling line tracker sensors
 {
-  pinMode(A2, INPUT); //out right
-  pinMode(A3, INPUT); //right
-  pinMode(A1, INPUT); //right middle
-  pinMode(A4, INPUT); //middle
-  pinMode(A7, INPUT); //left middle
-  pinMode(A5, INPUT); //left
-  pinMode(A6, INPUT); //out left
+  pinMode(A2, INPUT);
+  pinMode(A3, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A4, INPUT);
+  pinMode(A7, INPUT);
+  pinMode(A5, INPUT);
+  pinMode(A6, INPUT);
 }
 
 void track(void)
