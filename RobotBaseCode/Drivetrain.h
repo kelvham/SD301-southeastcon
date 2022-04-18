@@ -16,10 +16,10 @@ void pwm_init(void)
 void motor_init(void)
 {
   pwm_init();
-  pinMode(50, OUTPUT); //Direction(I1) for motor 0/left motor
-  pinMode(51, OUTPUT); //Direction(I2) for motor 0
-  pinMode(52, OUTPUT); //Direction(I3) for motor 1/right motor
-  pinMode(53, OUTPUT); //Direction(I4) for motor 1
+  pinMode(50, OUTPUT); //Direction(I1) for motor 0/left motor//50
+  pinMode(51, OUTPUT); //Direction(I2) for motor 0//51
+  pinMode(52, OUTPUT); //Direction(I3) for motor 1/right motor//52
+  pinMode(53, OUTPUT); //Direction(I4) for motor 1//53
 }
 
 void motor_speed(int motor, int duty)
@@ -108,8 +108,8 @@ void encoder_init(void)
 {
   pinMode(2, INPUT_PULLUP); //Encoder 0 CHA Left MOTOR
   pinMode(3, INPUT_PULLUP); //Encoder 0 CHB
-  pinMode(18, INPUT_PULLUP); //Encoder 1 CHA Right MOTOR
-  pinMode(19, INPUT_PULLUP); //Encoder 1 CHB
+  pinMode(19, INPUT_PULLUP); //Encoder 1 CHA Right MOTOR
+  pinMode(18, INPUT_PULLUP); //Encoder 1 CHB
   attachInterrupt(digitalPinToInterrupt(2), Enc0, RISING);
   attachInterrupt(digitalPinToInterrupt(18), Enc1, RISING);
 }
@@ -143,7 +143,7 @@ void Enc1()
 //PD control stuff----------------------------------------------------------------------------------------
 #define END_CPR     100
 #define Gear_Ratio  50
-#define T           0.1  // 100 msec
+#define T           0.1 //.1  // 100 msec
 
 float des_vel[2] = {0,0};
 float cur_vel[2] = {0,0};
@@ -185,6 +185,10 @@ void get_current_status(void)
   prev_pos[1] = cur_pos[1];
   des_pos[1] = prev_des_pos[1] + des_vel[1]*T;
   prev_des_pos[1] = des_pos[1];
+
+//  Serial.println(encoder0_val);
+//  Serial.println(" ");
+//  Serial.println(encoder1_val);
 }
 
 void low_level_control(void)
@@ -195,6 +199,10 @@ void low_level_control(void)
   float Kd = 0.5; //0.5;
   float volt[2] = {0,0};
   int duty = 0;
+/*
+  Serial.print(cur_pos[0]);
+  Serial.print(" ");
+  Serial.println(cur_pos[1]);*/
   
   volt[0] = Kp*(des_pos[0]-cur_pos[0]) + Ki*((des_pos[0] - cur_pos[0])*T) + Kd*(des_vel[0]-cur_vel[0]);
   volt[1] = Kp*(des_pos[1]-cur_pos[1]) + Ki*((des_pos[1] - cur_pos[1])*T) + Kd*(des_vel[1]-cur_vel[1]);

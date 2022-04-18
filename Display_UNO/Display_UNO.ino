@@ -1,3 +1,6 @@
+#include <Adafruit_CircuitPlayground.h>
+#include <Adafruit_Circuit_Playground.h>
+
 #include <Adafruit_GFX.h>         // Core graphics library
 #include <Adafruit_ILI9341.h>     // Hardware-specific library
 #include <SdFat.h>                // SD card & FAT filesystem library
@@ -55,7 +58,7 @@ void setup(void) {
 
   // Fill screen black. Not a required step, this just shows that we're
   // successfully communicating with the screen.
-  tft.fillScreen(ILI9341_BLACK);
+  //tft.fillScreen(ILI9341_BLACK);
 
   Serial.print(F("Loading logos.bmp to screen..."));
   reader.drawBMP("/logos.bmp", tft, 0, 0);
@@ -68,8 +71,8 @@ void loop() {
  Serial.print(F("Loading logos.bmp to screen..."));
  reader.drawBMP("/logos.bmp", tft, 0, 0);
 
- delay(6000);
- tft.fillScreen(ILI9341_BLACK);
+ //delay(6000);
+ //tft.fillScreen(ILI9341_BLACK);
  
- exit(1);
+// exit(1);
 }
