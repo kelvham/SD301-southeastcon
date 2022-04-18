@@ -1,0 +1,3 @@
+from imgproc import* //imports the image processing library
+my_camera = Camera(320,420) //opens the camera 
+my_image = my_camera.grabImage() //captures an image
